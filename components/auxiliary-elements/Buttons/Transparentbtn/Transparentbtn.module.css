@@ -1,0 +1,15 @@
+.transparentbtn {
+  padding: 20px 70px;
+  border-radius: 10px;
+  border: 3.5px solid #6f6c99;
+  font-size: 50px;
+  background-color: transparent;
+  color: white;
+}
+
+@media (max-width: 780px) {
+  .transparentbtn {
+    font-size: 30px;
+    padding: 10px 50px;
+  }
+}
