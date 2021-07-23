@@ -1,0 +1,22 @@
+.footer {
+  border-top: 5px solid #5b5985;
+  margin-top: 30vh;
+  font-size: 25px;
+}
+.footer__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15vw;
+}
+.footer__info {
+  margin-left: 15vw;
+  margin-top: 10px;
+}
+.footer__info > li {
+  margin-top: 10px;
+}
+@media (max-width: 780px) {
+  .footer {
+    font-size: 17px;
+  }
+}

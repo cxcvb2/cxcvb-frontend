@@ -1,0 +1,21 @@
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.header__title {
+  font-weight: bold;
+  font-size: 60px;
+}
+.a {
+  margin-right: 5%;
+}
+@media (max-width: 780px) {
+  .header__title {
+    display: none;
+  }
+}
