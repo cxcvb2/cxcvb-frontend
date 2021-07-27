@@ -1,0 +1,11 @@
+.filmCards_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -80px;
+  margin-top: -50px;
+}
+@media (max-width: 775px) {
+  .filmCards_wrapper {
+    justify-content: center;
+  }
+}

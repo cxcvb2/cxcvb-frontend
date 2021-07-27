@@ -1,4 +1,5 @@
 .main {
+  min-height: 55vh;
   padding-top: 80px;
 }
 .btns_wrapper {

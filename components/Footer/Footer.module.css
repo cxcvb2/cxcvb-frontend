@@ -1,7 +1,7 @@
 .footer {
   border-top: 5px solid #5b5985;
-  margin-top: 30vh;
   font-size: 25px;
+  padding-bottom: 20px;
 }
 .footer__wrapper {
   display: flex;

@@ -1,0 +1,18 @@
+.main {
+  min-height: 55vh;
+  padding: 80px 0;
+}
+.main_two_columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
+@media (max-width: 775px) {
+  .main_two_columns {
+    display: block;
+  }
+  .filmCards_wrapper {
+    justify-content: center;
+  }
+}
