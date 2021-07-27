@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ru } from './ru'
 import { en } from './en'
 import { tr } from './tr'
@@ -33,3 +34,8 @@ export default function useLang() {
     defaultLocale,
   }
 }
+=======
+export * from './ru'
+export * from './en'
+export * from './tr'
+>>>>>>> b6e5afb684f9c3601ed36340c2ec869f7ea470a5
