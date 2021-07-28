@@ -23,7 +23,7 @@
 .search_wrapper__input {
   font-size: 28px;
   color: white;
-  margin-left: auto;
+  margin-left: 10px;
   width: 97%;
 }
 @media (max-width: 780px) {
