@@ -11,7 +11,7 @@ export default function VideoLayout({ opened, result }) {
   const currentVideo = result.find((video) => {
     if (opened === video.source) return video
   })
-  console.log(currentVideo)
+ 
 
   return (
     <div className={s.videoLayout_wrapper}>

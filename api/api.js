@@ -5,7 +5,6 @@ export const instance = axios.create({
 })
 
 export const LoadVideos = ({ call, query }) => {
-  console.log(call, query)
   return instance
     .post('/api', {
       call,

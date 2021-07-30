@@ -27,7 +27,7 @@ export default function SaerchedPage({ result }) {
 
 export const getServerSideProps = async ({ query }) => {
   const { result } = await LoadVideos({ call: 1, query: query.query })
-  console.log(result)
+
   //if result is null(error) make redirect
   const isRedirect = !result && {
     redirect: {

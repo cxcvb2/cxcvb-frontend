@@ -20,7 +20,6 @@ export default function FilmCard({
         shallow
       >
         <a className={s.filmcard__img}>
-          {/* change to Image-next component  */}
           <Image src={thumbnail} layout="fill" alt={host} className={s.image} />
         </a>
       </Link>

@@ -5,11 +5,12 @@ import Transparentbtn from '../components/auxiliary-elements/Buttons/Transparent
 import Navigation from '../components/Navigation/Navigation'
 import Footer from '../components/Footer/Footer'
 import { useIntl } from '../hooks/useIntl'
+import MainLayout from '../components/Layout/MainLayout'
 
 export default function DashboardPage() {
   const { f } = useIntl()
   return (
-    <>
+    <MainLayout>
       <Header />
       <Navigation />
       <main className={s.main}>
@@ -30,6 +31,6 @@ export default function DashboardPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </MainLayout>
   )
 }

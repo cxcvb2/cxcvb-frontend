@@ -18,7 +18,7 @@
 .search_wrapper__input,
 .search_wrapper,
 .search_wrapper__input:-internal-autofill-selected {
-  background-color: #2e2867 !important;
+  background-color: #2e2867;
 }
 .search_wrapper__input {
   font-size: 28px;
@@ -33,6 +33,6 @@
     padding: 10px 13px 10px;
   }
   .search_wrapper__input {
-    font-size: 20px;
+    font-size: 18px;
   }
 }

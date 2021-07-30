@@ -7,12 +7,16 @@
   grid-template-columns: 1fr 1fr;
 }
 
-
 @media (max-width: 775px) {
   .main_two_columns {
     display: block;
   }
   .filmCards_wrapper {
     justify-content: center;
+  }
+}
+@media (max-width: 510px) {
+  .main {
+    padding: 23px 0;
   }
 }

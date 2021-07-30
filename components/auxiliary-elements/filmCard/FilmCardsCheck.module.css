@@ -9,3 +9,8 @@
     justify-content: center;
   }
 }
+@media (max-width: 510px) {
+  .filmCards_wrapper {
+    margin-top: -15px;
+  }
+}

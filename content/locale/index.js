@@ -12,7 +12,7 @@ export default function useLang() {
   const router = useRouter()
   const { locale, defaultLocale, pathname } = router
   const localeCopy = langs[locale]
-  // console.log(locale, defaultLocale, pathname, localeCopy, langs[locale], langs)
+
   if (pathname in localeCopy) {
     return { messages: localeCopy[pathname], locale, defaultLocale }
   }

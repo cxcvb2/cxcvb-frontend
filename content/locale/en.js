@@ -19,4 +19,7 @@ export const en = {
   '/[query]': {
     ...endefault,
   },
+  '/': {
+    ...endefault,
+  },
 }

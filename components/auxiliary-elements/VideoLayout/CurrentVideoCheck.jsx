@@ -1,12 +1,12 @@
 import s from './VideoLayout.module.css'
 
-export default function CurrentVideoCheck({currentVideo}) {
+export default function CurrentVideoCheck({ currentVideo }) {
   return (
     <>
       {currentVideo ? (
         <>
           <iframe
-            src={currentVideo.source}
+            src={`${currentVideo.source}?autoplay=1&mute=1`}
             title={`${currentVideo.host}'s video`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

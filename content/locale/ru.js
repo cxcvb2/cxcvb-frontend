@@ -19,4 +19,7 @@ export const ru = {
   '/[query]': {
     ...rudefault,
   },
+  '/': {
+    ...rudefault,
+  },
 }

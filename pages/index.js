@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation/Navigation'
 import Footer from '../components/Footer/Footer'
 // import { useIntl } from '../hooks/useIntl'
 
-export default function DashboardPage() {
+export default function index() {
   // const { f } = useIntl()
   return (
     <>
