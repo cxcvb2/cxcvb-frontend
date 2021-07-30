@@ -9,21 +9,21 @@ export default function Navigation() {
   const { push } = useRouter()
   useEffect(() => {
     const onKeykeydown = (e) => {
-      alert(e.key)
-      switch (Number(e.key)) {
-        case 1: {
+      alert(e.keyCode)
+      switch (Number(e.keyCode)) {
+        case 49: {
           push('/dashboard')
           break
         }
-        case 2: {
+        case 50: {
           push('/films')
           break
         }
-        case 3: {
+        case 51: {
           push('/serials')
           break
         }
-        case 4: {
+        case 52: {
           push('/onlinetv')
           break
         }
