@@ -3,18 +3,18 @@ import s from './searchInput.module.css'
 import { useIntl } from '../../../hooks/useIntl'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-export default function SearchInput({ keycode, inputRef }) {
+export default function SearchInput({ keyCode, inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
   const [searchInput, setSearchInput] = useState(query || '')
 
   useEffect(() => {
-    if (Number(keycode) === 48) {
+    if (Number(keyCode) === 48) {
       inputRef.current.focus()
       console.log(searchInput)
     }
-  }, [keycode])
+  }, [keyCode])
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     if (searchInput !== '' && query !== searchInput) {

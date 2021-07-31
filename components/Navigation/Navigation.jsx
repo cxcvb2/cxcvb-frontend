@@ -5,11 +5,12 @@ import { useRouter } from 'next/router'
 
 const navItems = ['dashboard', 'films', 'serials', 'onlinetv']
 
-export default function Navigation({ keycode }) {
+export default function Navigation({ keyCode }) {
   const { push } = useRouter()
 
   useEffect(() => {
-    switch (Number(keycode)) {
+    alert(`${keyCode} keyCode: alert in navigation`)
+    switch (Number(keyCode)) {
       case 49: {
         push('/dashboard')
         break
@@ -27,7 +28,7 @@ export default function Navigation({ keycode }) {
         break
       }
     }
-  }, [keycode])
+  }, [keyCode])
 
   return (
     <>
