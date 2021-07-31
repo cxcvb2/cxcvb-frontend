@@ -2,26 +2,19 @@ import Image from 'next/image'
 import s from './searchInput.module.css'
 import { useIntl } from '../../../hooks/useIntl'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
-export default function SearchInput() {
+import { useState, useEffect } from 'react'
+export default function SearchInput({ keycode, inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
   const [searchInput, setSearchInput] = useState(query || '')
-  const inputRef = useRef()
 
   useEffect(() => {
-    const onKeykeydown = (e) => {
-      if (Number(e.key) === 0) {
-        inputRef.current.focus()
-        console.log(searchInput)
-      }
+    if (Number(keycode) === 48) {
+      inputRef.current.focus()
+      console.log(searchInput)
     }
-    document.addEventListener('keydown', onKeykeydown)
-    return () => {
-      document.removeEventListener('keydown', onKeykeydown)
-    }
-  }, [])
+  }, [keycode])
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     if (searchInput !== '' && query !== searchInput) {

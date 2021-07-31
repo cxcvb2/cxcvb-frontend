@@ -5,35 +5,30 @@ import { useRouter } from 'next/router'
 
 const navItems = ['dashboard', 'films', 'serials', 'onlinetv']
 
-export default function Navigation() {
+export default function Navigation({ keycode }) {
   const { push } = useRouter()
+
   useEffect(() => {
-    const onKeykeydown = (e) => {
-      alert(e.keyCode)
-      switch (Number(e.keyCode)) {
-        case 49: {
-          push('/dashboard')
-          break
-        }
-        case 50: {
-          push('/films')
-          break
-        }
-        case 51: {
-          push('/serials')
-          break
-        }
-        case 52: {
-          push('/onlinetv')
-          break
-        }
+    switch (Number(keycode)) {
+      case 49: {
+        push('/dashboard')
+        break
+      }
+      case 50: {
+        push('/films')
+        break
+      }
+      case 51: {
+        push('/serials')
+        break
+      }
+      case 52: {
+        push('/onlinetv')
+        break
       }
     }
-    document.addEventListener('keydown', onKeykeydown)
-    return () => {
-      document.removeEventListener('keydown', onKeykeydown)
-    }
-  }, [])
+  }, [keycode])
+
   return (
     <>
       <nav className={s.nav}>

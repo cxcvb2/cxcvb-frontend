@@ -4,6 +4,8 @@ import React from 'react'
 import Loader from '../auxiliary-elements/Loader/Loader'
 import { IntlProvider } from 'react-intl'
 import useLang from '../../content/locale'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 export default function MainLayout({ children }) {
   const { messages, locale, defaultLocale } = useLang()
@@ -43,7 +45,9 @@ export default function MainLayout({ children }) {
         defaultLocale={defaultLocale}
         messages={messages}
       >
+        <Header />
         {loading && <Loader />} {children}
+        <Footer />
       </IntlProvider>
     </>
   )

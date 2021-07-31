@@ -1,6 +1,3 @@
-import Header from '../components/Header/Header'
-import Navigation from '../components/Navigation/Navigation'
-import Footer from '../components/Footer/Footer'
 // import { useIntl } from '../hooks/useIntl'
 import s from '../styles/SearchedPage.module.css'
 import FilmCardsCheck from '../components/auxiliary-elements/filmCard/FilmCardsCheck'
@@ -14,13 +11,10 @@ export default function SaerchedPage({ result }) {
   const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
   return (
     <>
-      <Header />
-      <Navigation />
       <main className={mainclasses}>
         <FilmCardsCheck result={result} />
         {opened && <VideoLayout result={result} opened={opened} />}
       </main>
-      <Footer />
     </>
   )
 }
