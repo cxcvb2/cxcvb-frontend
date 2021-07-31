@@ -9,7 +9,6 @@ export default function Navigation({ keyCode }) {
   const { push } = useRouter()
 
   useEffect(() => {
-    alert(`${keyCode} keyCode: alert in navigation`)
     switch (Number(keyCode)) {
       case 49: {
         push('/dashboard')
