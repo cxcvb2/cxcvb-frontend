@@ -31,7 +31,7 @@
 }
 .filmcard__content {
   width: 100%;
-  height: 250px;
+  height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -58,6 +58,7 @@
   }
   .filmcard__content {
     padding: 14px;
+    height: 200px;
   }
 
   .filmcard__img > div {

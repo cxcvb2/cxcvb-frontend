@@ -1,4 +1,4 @@
-import s from '../styles/DashboardPage.module.css'
+import s from '../styles/Home.module.css'
 // import { useIntl } from '../hooks/useIntl'
 
 export default function index() {
