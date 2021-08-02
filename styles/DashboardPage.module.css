@@ -1,0 +1,14 @@
+.main {
+  min-height: 55vh;
+  padding-top: 80px;
+}
+.btns_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -3%;
+}
+.speedtestbtn {
+  display: block;
+  margin-top: 20px;
+  margin-left: 3%;
+}
