@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Router from 'next/router'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import Loader from '../auxiliary-elements/Loader/Loader'
 import { IntlProvider } from 'react-intl'
 import useLang from '../../content/locale'
@@ -10,8 +10,8 @@ import Footer from '../Footer/Footer'
 export default function MainLayout({ children }) {
   const { messages, locale, defaultLocale } = useLang()
 
-  const [loading, setLoading] = React.useState(false)
-  React.useEffect(() => {
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
     const start = () => {
       console.log('start')
       setLoading(true)
