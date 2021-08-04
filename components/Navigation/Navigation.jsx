@@ -9,20 +9,20 @@ export default function Navigation({ keyCode }) {
   const { push } = useRouter()
 
   useEffect(() => {
-    switch (Number(keyCode)) {
-      case 49: {
+    switch (keyCode) {
+      case 1: {
         push('/dashboard')
         break
       }
-      case 50: {
+      case 2: {
         push('/films')
         break
       }
-      case 51: {
+      case 3: {
         push('/serials')
         break
       }
-      case 52: {
+      case 4: {
         push('/onlinetv')
         break
       }

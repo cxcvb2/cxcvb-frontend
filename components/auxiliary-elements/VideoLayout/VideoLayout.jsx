@@ -9,7 +9,7 @@ export default function VideoLayout({ opened, result }) {
     router.replace(router.query.query, undefined, { shallow: true })
   }
   const currentVideo = result.find((video) => {
-    if (opened === video.source) return video
+    if (opened === video?.source) return video
   })
 
   return (

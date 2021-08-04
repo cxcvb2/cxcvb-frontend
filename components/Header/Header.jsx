@@ -1,28 +1,25 @@
 import s from './header.module.css'
-import SearchInput from '../auxiliary-elements/SearchInput/SearchInput'
+import SearchInput from '../auxiliary-elements/Inputs/SearchInput/SearchInput'
 import Link from 'next/link'
 import Navigation from '../Navigation/Navigation'
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
+import { useStore } from 'effector-react'
+import { $keyCode, changeKeyCode } from '../../effector/SearchedPage'
+
 export default function Header() {
-  const [keyCode, setkeyCode] = useState(null)
+  const keyCode = useStore($keyCode)
   const inputRef = useRef()
-
   useEffect(() => {
-    const onKeykeydown = (e) => {
-      // when state is 0 and user lose focus of input and press again 0 component doesnt rerender, for that setCayCode(null) to rerender
-      if (Number(e.keyCode) === 48) {
-        setkeyCode(null)
-      }
+    console.log(keyCode)
+    // when state is 0 and user lose focus of input and press again 0 component doesnt rerender, for that setCayCode(null) to rerender
+    if (keyCode === 0) {
+      changeKeyCode(null)
+    }
 
-      if (document.activeElement.id !== inputRef.current.id) {
-        setkeyCode(e.keyCode)
-      }
+    if (document.activeElement.id !== inputRef.current.id) {
+      changeKeyCode(keyCode)
     }
-    document.addEventListener('keydown', onKeykeydown)
-    return () => {
-      document.removeEventListener('keydown', onKeykeydown)
-    }
-  }, [])
+  }, [keyCode])
   return (
     <header>
       <div className={s.header}>

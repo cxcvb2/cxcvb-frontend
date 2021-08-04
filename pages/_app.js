@@ -4,8 +4,6 @@ import React from 'react'
 import App from 'next/app'
 import MainLayout from '../components/Layout/MainLayout'
 
- 
-
 class MyApp extends App {
   static async getInitialProps(appContext) {
     const appProps = await App.getInitialProps(appContext)

@@ -1,7 +1,7 @@
 import * as axios from 'axios'
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: process.env.baseURL,
 })
 
 export const LoadVideos = ({ call, query }) => {

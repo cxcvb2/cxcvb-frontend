@@ -16,8 +16,7 @@
   height: 100%;
 }
 .search_wrapper__input,
-.search_wrapper,
-.search_wrapper__input:-internal-autofill-selected {
+.search_wrapper {
   background-color: #2e2867;
 }
 .search_wrapper__input {
