@@ -1,15 +1,13 @@
 import Head from 'next/head'
 import Router from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Loader from '../auxiliary-elements/Loader/Loader'
-import { IntlProvider } from 'react-intl'
-import useLang from '../../content/locale'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import KeyCodeInput from '../auxiliary-elements/Inputs/KeyCodeInput/KeyCodeInput'
 
 export default function MainLayout({ children }) {
-  const { messages, locale, defaultLocale } = useLang()
+  const inputRef = useRef()
 
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -41,16 +39,10 @@ export default function MainLayout({ children }) {
         ></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <IntlProvider
-        locale={locale}
-        defaultLocale={defaultLocale}
-        messages={messages}
-      >
-        <Header />
-        <KeyCodeInput />
-        {loading && <Loader />} {children}
-        <Footer />
-      </IntlProvider>
+      <Header inputRef={inputRef} />
+      <KeyCodeInput inputRef={inputRef} />
+      {loading && <Loader />} {children}
+      <Footer />
     </>
   )
 }

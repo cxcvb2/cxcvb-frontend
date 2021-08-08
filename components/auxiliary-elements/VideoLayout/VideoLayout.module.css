@@ -36,11 +36,16 @@
   height: 23vw;
   max-height: calc(100vh - 45px);
 }
+.videoLayout__host {
+  font-weight: 500;
+  color: #c5c5ff;
+  margin-top: 1rem;
+  font-size: 18px;
+}
 
-.videoLayout__host,
 .videoLayout__desc {
   margin-top: 1rem;
-  font-size: 20px;
+  font-size: 16px;
   color: #c5c5ff;
 }
 .videoLayout__errormessage {
@@ -64,10 +69,7 @@
   .videoLayout__video {
     height: 32vw;
   }
-  .videoLayout__host,
-  .videoLayout__desc {
-    font-size: 16px;
-  }
+
   .videoLayout__title {
     font-size: 18px;
   }

@@ -3,32 +3,37 @@ import s from './searchInput.module.css'
 import { useIntl } from '../../../../hooks/useIntl'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-export default function SearchInput({ keyCode, inputRef }) {
+
+export default function SearchInput({ inputRef, keyCode }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInput, setSearchInput] = useState(query || '')
+  const [searchInputVal, setSearchInputVal] = useState(query || '')
 
   useEffect(() => {
     if (keyCode === 0) {
-      inputRef.current.focus()
+      //on focus to input value appends 0: stop for don't appending
+      setTimeout(() => {
+        inputRef.current.focus()
+      }, 1)
     }
   }, [keyCode])
   const handleSearchSubmit = (e) => {
     e.preventDefault()
-    if (searchInput !== '' && query !== searchInput) {
-      router.push(searchInput)
+    if (searchInputVal !== '' && query !== searchInputVal) {
+      router.push(`${searchInputVal}?p=1`)
     }
   }
   const handleSearchonChange = (e) => {
-    setSearchInput(e.target.value)
+    console.log(e.target.value)
+    setSearchInputVal(e.target.value)
   }
 
   return (
     <form onSubmit={handleSearchSubmit} className={s.search_wrapper}>
-      <label className={s.searchIcon__wrapper} htmlFor="searchInput">
+      <label className={s.searchIcon__wrapper} htmlFor="searchInputVal">
         <Image
-          src="/searchIcon.svg"
+          src="/images/searchIcon.svg"
           width={30}
           height={30}
           alt="cxcvb search"
@@ -36,11 +41,11 @@ export default function SearchInput({ keyCode, inputRef }) {
       </label>
       <input
         ref={inputRef}
-        id="searchInput"
+        id="searchInputVal"
         className={s.search_wrapper__input}
         type="text"
         placeholder={f('search') + '(0)'}
-        value={searchInput}
+        value={searchInputVal}
         onChange={handleSearchonChange}
       />
     </form>

@@ -7,7 +7,7 @@ import {
   openKeyInput,
 } from '../../../../effector/SearchedPage'
 
-export default function KeyCodeInput() {
+export default function KeyCodeInput({ inputRef }) {
   const [inputValue, setInputValue] = useState('')
   const IsKeyInputOpened = useStore($IsKeyInputOpened)
   const keyInputRef = useRef()
@@ -17,11 +17,16 @@ export default function KeyCodeInput() {
     const onKeydown = (e) => {
       if (
         document.activeElement !== keyInputRef.current &&
-        47 <= Number(e.keyCode) &&
-        Number(e.keyCode) <= 57
+        document.activeElement !== inputRef.current
       ) {
-        openKeyInput()
-        keyInputRef.current.focus()
+        if (49 <= Number(e.keyCode) && Number(e.keyCode) <= 57) {
+          openKeyInput()
+          keyInputRef.current.focus()
+        } else if (48 === Number(e.keyCode)) {
+          // when state is 0 and user lose focus of input and press again 0 component doesnt rerender, for that setCayCode(null) to rerender
+          changeKeyCode(null)
+          changeKeyCode(0)
+        }
       }
     }
     document.addEventListener('keydown', onKeydown)
@@ -32,32 +37,36 @@ export default function KeyCodeInput() {
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
-    changeKeyCode(value)
+    value && changeKeyCode(value)
     setInputValue('')
     openKeyInput()
   }
 
   const handleOnChange = (event) => {
-    const value = Number(event.target.value) || inputValue
+    let value = inputValue
+    if (Number(event.target.value)) {
+      value = Number(event.target.value)
+    } else if (event.target.value === '') {
+      value = event.target.value
+    }
     clearTimeout(onKeydownTimeout)
-
     setInputValue(value)
-
-    console.log(value, Number(event.target.value))
     const timeOut = setTimeout(() => {
       keyCodechangeing(value)
     }, 2000)
 
     setOnKeydownTimeout(timeOut)
   }
+
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    console.log(inputValue)
     keyCodechangeing(inputValue)
   }
+
   const KeyCodeInputClasses = !IsKeyInputOpened
     ? `${s.KeyCodeInput_wrapper} ${s.KeyCodeInput_Hidden}`
     : s.KeyCodeInput_wrapper
+
   return (
     <>
       <form onSubmit={handleOnSubmit} className={KeyCodeInputClasses}>
@@ -65,7 +74,7 @@ export default function KeyCodeInput() {
           value={inputValue}
           onChange={handleOnChange}
           type="text"
-          maxLength="5"
+          maxLength="6"
           className={s.KeyCodeInput}
           ref={keyInputRef}
         />

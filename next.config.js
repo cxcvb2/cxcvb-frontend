@@ -1,10 +1,13 @@
-module.exports = {
+const { withEffectoReactAliases } = require('effector-next/tools')
+
+const enhance = withEffectoReactAliases()
+module.exports = enhance({
   reactStrictMode: true,
   i18n: {
     locales: ['en', 'ru', 'tr'],
     defaultLocale: 'en',
   },
   images: {
-    domains: ['youtube.com', 'ok.ru', 'i3.ytimg.com', 'i.mycdn.me'],
+    domains: ['localhost'],
   },
-}
+})

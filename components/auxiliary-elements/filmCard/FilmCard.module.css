@@ -7,7 +7,7 @@
 .filmcard {
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: 300px;
   height: fit-content;
   border-radius: 15px;
   margin-left: 80px;
@@ -21,12 +21,18 @@
 .filmcard__img > div {
   position: unset !important;
   width: 100%;
-  height: 270px;
+  height: 220px;
   object-fit: cover;
   border-radius: 15px 15px 0 0;
 }
+.filmcard__host_ind {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
 .filmcard__title {
-  font-size: 20px;
+  font-size: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -35,53 +41,53 @@
 }
 .filmcard__content {
   width: 100%;
-  height: 250px;
+  height: 217px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
+  padding: 14px 14px 10px 14px;
   border-radius: 0 0 15px 15px;
   background-color: #2e2867;
 }
-.filmcard__host,
-.filmcard__description {
-  margin-top: 1rem;
-  font-size: 20px;
+.filmcard__host {
   color: #c5c5ff;
+  font-size: 18px;
+  font-weight: 500;
 }
 .filmcard__description {
+  font-size: 16px;
+  margin-top: 0.6rem;
+  color: #c5c5ff;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.filmcard__remotecontroller_ind {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c5c5ff;
+  border-radius: 30px;
+  padding: 3px 9px;
+}
 
-@media (max-width: 1915px) {
-  .filmcard {
-    width: 300px;
-  }
-  .filmcard__content {
-    padding: 14px;
-    height: 217px;
-  }
-
-  .filmcard__img > div {
-    height: 190px;
-  }
-  .filmcard__host,
-  .filmcard__description {
-    font-size: 16px;
-  }
-  .filmcard__title {
-    font-size: 18px;
-  }
+.filmcard_ind {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2e2867;
+  font-weight: bold;
+  font-size: 17px;
 }
 
 @media (max-width: 800px) {
   .filmcard {
     flex-direction: row;
-    height: 140px;
+    height: 120px;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
   }
   .filmcard__content {
     height: 100%;
@@ -94,25 +100,24 @@
   .filmcard__host,
   .filmcard__description {
     margin-top: 0.3rem;
-    font-style: 13px;
+    font-size: 13px;
   }
   .filmcard__description {
     -webkit-line-clamp: 2;
   }
-  .filmcard {
-    width: 100%;
-    margin-left: 0;
-    display: flex;
-  }
+
   .filmcard__img > div {
     width: 155px;
     height: 100%;
     border-radius: 15px 0 0 15px;
   }
+  .filmcard__remotecontroller_ind {
+    display: none !important;
+  }
 }
 @media (max-width: 510px) {
   .filmcard {
-    height: 88px;
+    height: 98px;
     margin-top: 15px;
   }
 

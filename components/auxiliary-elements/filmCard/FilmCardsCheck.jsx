@@ -7,7 +7,7 @@ import { $keyCode } from '../../../effector/SearchedPage'
 
 export default function FilmCardsCheck({ result }) {
   const keyCode = useStore($keyCode)
-
+  console.log(result, 'ehhhhhhhhh')
   const router = useRouter()
   const { opened } = router.query
 
@@ -15,12 +15,14 @@ export default function FilmCardsCheck({ result }) {
     // if (!router.query.opened && result.length) {
     //   router.push(`${router.asPath}?opened=${result[0]?.source}`)
     // }
-    if (keyCode - 10 <= result.length && keyCode && keyCode >= 10) {
+    if (keyCode - 10 <= result.length - 1 && keyCode && keyCode >= 10) {
+      console.log(keyCode - 10, result.length)
       router.push(
         {
           pathname: '/[query]',
           query: {
             query: router.query.query,
+            p: router.query.p || 1,
             opened: encodeURI(result[keyCode - 10]?.source),
           },
         },
@@ -33,10 +35,10 @@ export default function FilmCardsCheck({ result }) {
   const filmCards_wrapperClasses = opened
     ? `${s.filmCards_wrapper_mb} ${s.filmCards_wrapper} `
     : s.filmCards_wrapper
-  console.log(result)
+
   return (
     <>
-      {!result.length ? (
+      {result.length ? (
         <h1>There are no video in this query - {router.query.query}</h1>
       ) : (
         <div className={filmCards_wrapperClasses}>

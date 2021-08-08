@@ -1,8 +1,11 @@
 import '../styles/globals.css'
-
 import React from 'react'
+import { withHydrate } from 'effector-next'
 import App from 'next/app'
-import MainLayout from '../components/Layout/MainLayout'
+import { IntlProvider } from 'react-intl'
+import useLang from '../content/locale'
+
+const enhance = withHydrate()
 
 class MyApp extends App {
   static async getInitialProps(appContext) {
@@ -31,18 +34,23 @@ class MyApp extends App {
         appContext.ctx.res.end()
       }
     }
+    const { messages, locale, defaultLocale } = useLang()
 
-    return { ...appProps }
+    return { ...appProps, messages, locale, defaultLocale }
   }
 
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps, messages, locale, defaultLocale } = this.props
     return (
-      <MainLayout>
+      <IntlProvider
+        locale={locale}
+        defaultLocale={defaultLocale}
+        messages={messages}
+      >
         <Component {...pageProps} />
-      </MainLayout>
+      </IntlProvider>
     )
   }
 }
 
-export default MyApp
+export default enhance(MyApp)

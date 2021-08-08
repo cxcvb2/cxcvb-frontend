@@ -6,7 +6,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-
+.filmCards_Loader_observer {
+  background-color: red;
+  height: 100px;
+}
 @media (max-width: 1555px) {
   .main {
     padding: 50px 0;

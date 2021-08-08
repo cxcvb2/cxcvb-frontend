@@ -7,22 +7,24 @@ import MainLayout from '../components/Layout/MainLayout'
 export default function DashboardPage() {
   const { f } = useIntl()
   return (
-    <main className={s.main}>
-      <div className={s.btns_wrapper}>
-        <Link href="/signin">
-          <a className={s.speedtestbtn}>
-            <Transparentbtn>{f('signin')}</Transparentbtn>
+    <MainLayout>
+      <main className={s.main}>
+        <div className={s.btns_wrapper}>
+          <Link href="/signin">
+            <a className={s.speedtestbtn}>
+              <Transparentbtn>{f('signin')}</Transparentbtn>
+            </a>
+          </Link>
+          <a
+            href="https://www.speedtest.net/ru"
+            target="_blank"
+            className={s.speedtestbtn}
+            rel="noreferrer"
+          >
+            <Transparentbtn>{f('speedtest')}</Transparentbtn>
           </a>
-        </Link>
-        <a
-          href="https://www.speedtest.net/ru"
-          target="_blank"
-          className={s.speedtestbtn}
-          rel="noreferrer"
-        >
-          <Transparentbtn>{f('speedtest')}</Transparentbtn>
-        </a>
-      </div>
-    </main>
+        </div>
+      </main>
+    </MainLayout>
   )
 }

@@ -4,11 +4,11 @@ export const instance = axios.create({
   baseURL: process.env.baseURL,
 })
 
-export const LoadVideos = ({ call, query }) => {
+export const LoadVideos = ({ call, query, page }) => {
   return instance
     .post('/api', {
       call,
-      'videos.1/search': { query },
+      'videos.1/search': { query, page },
     })
     .then((response) => {
       return response.data
@@ -16,7 +16,6 @@ export const LoadVideos = ({ call, query }) => {
     .catch((e) => {
       console.log(e)
       //when we crate 404 page its will redirect there
-
       return { result: null }
     })
 }
