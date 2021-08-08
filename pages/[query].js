@@ -7,11 +7,13 @@ import { LoadVideos } from '../api/api'
 import { useStore } from 'effector-react'
 import { $filmCards, addFilmCards } from '../effector/SearchedPage'
 import { withStart } from 'effector-next'
+import MainLayout from '../components/Layout/MainLayout'
 
 const enhance = withStart(addFilmCards)
 
 function SaerchedPage() {
   const result = useStore($filmCards)
+
   console.log(result[0], 'result')
   const router = useRouter()
   const { opened } = router.query
@@ -49,15 +51,16 @@ function SaerchedPage() {
   //if video player opened main will had two columns and margin in
   const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
   return (
-    <main className={mainclasses}>
-      {/* <FilmCardsCheck result={result} /> */}
-      {/* {opened && <VideoLayout result={result} opened={opened} />} */}
-      {/* {result.map((e) => e.title)} */}
-      <div className={s.filmCards_Loader_observer} ref={observedEl} />
-    </main>
+    <MainLayout>
+      <main className={mainclasses}>
+        {/* <FilmCardsCheck result={result} /> */}
+        {/* {opened && <VideoLayout result={result} opened={opened} />} */}
+        {/* {result.map((e) => e.title)} */}
+        <div className={s.filmCards_Loader_observer} ref={observedEl} />
+      </main>
+    </MainLayout>
   )
 }
-export default enhance(SaerchedPage)
 
 export const getServerSideProps = async ({ query }) => {
   const page = query.p || 1
@@ -80,3 +83,5 @@ export const getServerSideProps = async ({ query }) => {
     props: {},
   }
 }
+
+export default SaerchedPage

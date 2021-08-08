@@ -1,4 +1,4 @@
-import { createEvent, createStore } from 'effector'
+import { createEvent, createStore } from 'effector-next'
 
 export const addFilmCards = createEvent()
 export const $filmCards = createStore([])

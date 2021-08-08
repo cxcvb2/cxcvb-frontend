@@ -34,13 +34,14 @@ class MyApp extends App {
         appContext.ctx.res.end()
       }
     }
-    const { messages, locale, defaultLocale } = useLang()
+    const { messages, locale, defaultLocale } = useLang(appContext.router)
 
     return { ...appProps, messages, locale, defaultLocale }
   }
 
   render() {
     const { Component, pageProps, messages, locale, defaultLocale } = this.props
+    console.log(messages, locale, defaultLocale)
     return (
       <IntlProvider
         locale={locale}

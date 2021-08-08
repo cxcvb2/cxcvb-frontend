@@ -1,15 +1,14 @@
 import { ru } from './ru'
 import { en } from './en'
 import { tr } from './tr'
-import { useRouter } from 'next/router'
 
 const langs = {
   ru,
   en,
   tr,
 }
-export default function useLang() {
-  const router = useRouter()
+
+export default function useLang(router) {
   const { locale, defaultLocale, pathname } = router
   const localeCopy = langs[locale]
 

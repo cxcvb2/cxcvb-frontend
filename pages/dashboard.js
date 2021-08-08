@@ -3,8 +3,12 @@ import Link from 'next/link'
 import Transparentbtn from '../components/auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 import { useIntl } from '../hooks/useIntl'
 import MainLayout from '../components/Layout/MainLayout'
+import { withStart } from 'effector-next'
+import { $keyCods, changeKeyCode } from '../effector/SearchedPage'
 
-export default function DashboardPage() {
+const enhance = withStart(changeKeyCode)
+
+function DashboardPage() {
   const { f } = useIntl()
   return (
     <MainLayout>
@@ -28,3 +32,4 @@ export default function DashboardPage() {
     </MainLayout>
   )
 }
+export default enhance(DashboardPage)
