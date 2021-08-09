@@ -5,7 +5,7 @@ import {
   changeKeyCode,
   $IsKeyInputOpened,
   openKeyInput,
-} from '../../../../effector/SearchedPage'
+} from '../../../../store/searchedPage'
 
 export default function KeyCodeInput({ inputRef }) {
   const [inputValue, setInputValue] = useState('')
@@ -37,6 +37,7 @@ export default function KeyCodeInput({ inputRef }) {
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
+    console.log('change ', value)
     value && changeKeyCode(value)
     setInputValue('')
     openKeyInput()

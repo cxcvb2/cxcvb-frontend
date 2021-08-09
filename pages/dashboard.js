@@ -2,16 +2,23 @@ import s from '../styles/DashboardPage.module.css'
 import Link from 'next/link'
 import Transparentbtn from '../components/auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 import { useIntl } from '../hooks/useIntl'
-import MainLayout from '../components/Layout/MainLayout'
-import { withStart } from 'effector-next'
-import { $keyCods, changeKeyCode } from '../effector/SearchedPage'
+import { serialize, fork } from 'effector'
+import root from '../store/root-domain'
 
-const enhance = withStart(changeKeyCode)
+export const getServerSideProps = async (context) => {
+  const scope = fork(root)
 
-function DashboardPage() {
+  return {
+    props: {
+      store: serialize(scope, { onlyChanges: true }),
+    },
+  }
+}
+
+export default function DashboardPage() {
   const { f } = useIntl()
   return (
-    <MainLayout>
+    
       <main className={s.main}>
         <div className={s.btns_wrapper}>
           <Link href="/signin">
@@ -29,7 +36,6 @@ function DashboardPage() {
           </a>
         </div>
       </main>
-    </MainLayout>
+   
   )
 }
-export default enhance(DashboardPage)

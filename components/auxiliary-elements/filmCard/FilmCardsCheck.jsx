@@ -3,11 +3,10 @@ import FilmCard from './FilmCard.jsx'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useStore } from 'effector-react'
-import { $keyCode } from '../../../effector/SearchedPage'
+import { $keyCode } from '../../../store/searchedPage'
 
 export default function FilmCardsCheck({ result }) {
   const keyCode = useStore($keyCode)
-  console.log(result, 'ehhhhhhhhh')
   const router = useRouter()
   const { opened } = router.query
 
@@ -37,16 +36,17 @@ export default function FilmCardsCheck({ result }) {
     : s.filmCards_wrapper
 
   return (
-    <>
-      {result.length ? (
-        <h1>There are no video in this query - {router.query.query}</h1>
-      ) : (
-        <div className={filmCards_wrapperClasses}>
-          {result.map((el, ind) => (
-            <FilmCard {...el} ind={ind + 10} key={el?.source} />
-          ))}
-        </div>
-      )}
-    </>
+    <div suppressHydrationWarning>{JSON.stringify(result)}</div>
+    // <>
+    //   {result.length ? (
+    //     <h1>There are no video in this query - {router.query.query}</h1>
+    //   ) : (
+    //     <div className={filmCards_wrapperClasses}>
+    //       {result.map((el, ind) => (
+    //         <FilmCard {...el} ind={ind + 10} key={el?.source} />
+    //       ))}
+    //     </div>
+    //   )}
+    // </>
   )
 }
