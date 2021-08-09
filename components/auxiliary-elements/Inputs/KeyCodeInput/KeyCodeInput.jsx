@@ -5,7 +5,7 @@ import {
   changeKeyCode,
   $IsKeyInputOpened,
   openKeyInput,
-} from '../../../../store/searchedPage'
+} from '../../../../store/model'
 
 export default function KeyCodeInput({ inputRef }) {
   const [inputValue, setInputValue] = useState('')

@@ -4,9 +4,9 @@ import FilmCardsCheck from '../components/auxiliary-elements/filmCard/FilmCardsC
 import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayout'
 import { useRouter } from 'next/router'
 import { useStore } from 'effector-react/ssr'
-import { $filmCards, FetchFilmCards } from '../store/searchedPage'
-import root from '../store/root-domain'
-import { serialize, fork, allSettled } from 'effector'
+import { $filmCards, FetchFilmCards } from '../store/model'
+import { allSettled, fork } from 'effector'
+import { app } from '../store/model'
 
 export default function SaerchedPage() {
   const result = useStore($filmCards)
@@ -57,7 +57,7 @@ export default function SaerchedPage() {
 
 export const getServerSideProps = async ({ query }) => {
   const page = query.p || 1
-  const scope = fork(root)
+  const scope = fork(app)
   await allSettled(FetchFilmCards, {
     scope,
     params: {
@@ -68,8 +68,6 @@ export const getServerSideProps = async ({ query }) => {
   })
 
   return {
-    props: {
-      store: serialize(scope, { onlyChanges: true }),
-    },
+    props: {},
   }
 }

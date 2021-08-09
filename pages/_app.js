@@ -4,12 +4,12 @@ import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import useLang from '../content/locale'
 import { Provider as EffectorProvider } from 'effector-react/ssr'
-import '../store/searchedPage'
-import { useMergeState } from '../hooks/useMergeState'
+import { useScope } from '../store/useScope'
+import { app } from '../store/model'
 import MainLayout from '../components/Layout/MainLayout'
 
 function MyApp({ Component, pageProps, messages, locale, defaultLocale }) {
-  const scope = useMergeState(pageProps)
+  const scope = useScope(app, pageProps.initialState)
 
   return (
     <EffectorProvider value={scope}>

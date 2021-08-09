@@ -3,7 +3,7 @@ import FilmCard from './FilmCard.jsx'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useStore } from 'effector-react'
-import { $keyCode } from '../../../store/searchedPage'
+import { $keyCode } from '../../../store/model'
 
 export default function FilmCardsCheck({ result }) {
   const keyCode = useStore($keyCode)
