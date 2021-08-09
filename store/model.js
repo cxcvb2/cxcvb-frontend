@@ -4,7 +4,7 @@ import { LoadVideos } from '../api/api'
 export const app = createDomain('rootDomain')
 
 export const addFilmCards = app.createEvent()
-export const $filmCards = app.createStore([])
+const $filmCards = app.createStore([], { sid: 'filmCards' })
 export const FetchFilmCards = app.createEffect(
   async ({ call, query, page }) => {
     const { result } = await LoadVideos({

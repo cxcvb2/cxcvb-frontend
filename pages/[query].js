@@ -5,7 +5,7 @@ import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayou
 import { useRouter } from 'next/router'
 import { useStore } from 'effector-react/ssr'
 import { $filmCards, FetchFilmCards } from '../store/model'
-import { allSettled, fork } from 'effector'
+import { allSettled, fork, serialize } from 'effector'
 import { app } from '../store/model'
 
 export default function SaerchedPage() {
@@ -68,6 +68,6 @@ export const getServerSideProps = async ({ query }) => {
   })
 
   return {
-    props: {},
+    props: { initialState: serialize(scope, { onlyChanges: true }) },
   }
 }

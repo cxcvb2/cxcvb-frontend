@@ -11,6 +11,7 @@ export const LoadVideos = ({ call, query, page }) => {
       'videos.1/search': { query, page },
     })
     .then((response) => {
+      console.log(response.data)
       return response.data
     })
     .catch((e) => {
