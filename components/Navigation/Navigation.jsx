@@ -6,24 +6,24 @@ import { useRouter } from 'next/router'
 const navItems = ['dashboard', 'films', 'serials', 'onlinetv']
 
 export default function Navigation({ keyCode }) {
-  const { push } = useRouter()
+  const router = useRouter()
 
   useEffect(() => {
     switch (keyCode) {
       case 1: {
-        push('/dashboard')
+        router.push('/dashboard')
         break
       }
       case 2: {
-        push('/films')
+        router.push('/films')
         break
       }
       case 3: {
-        push('/serials')
+        router.push('/serials')
         break
       }
       case 4: {
-        push('/onlinetv')
+        router.push('/onlinetv')
         break
       }
     }
