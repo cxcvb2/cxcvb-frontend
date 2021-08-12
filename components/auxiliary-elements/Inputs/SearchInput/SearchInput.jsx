@@ -11,7 +11,6 @@ export default function SearchInput({ inputRef }) {
   const router = useRouter()
   const { query } = router.query
   const [searchInputVal, setSearchInputVal] = useState('')
-  const [searchCardsTimeout, setSearchCardsTimeout] = useState(null)
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
@@ -29,7 +28,6 @@ export default function SearchInput({ inputRef }) {
   }
 
   const handleSearchSubmit = (e) => {
-    clearTimeout(searchCardsTimeout)
     e.preventDefault()
     if (searchInputVal.replace(/\s/g, '')?.length && query !== searchInputVal) {
       router.push(`/${searchInputVal}?p=1`)
@@ -39,14 +37,8 @@ export default function SearchInput({ inputRef }) {
 
   const handleSearchonChange = (e) => {
     e.target.value === '' && setIsSearchInputRecOpened(false)
-    clearTimeout(searchCardsTimeout)
     setSearchInputVal(e.target.value)
-
-    const timeOut = setTimeout(() => {
-      loadRecomendation(e.target.value)
-    }, 2000)
-
-    setSearchCardsTimeout(timeOut)
+    loadRecomendation(e.target.value)
   }
   const search_input_rec_classes = isSearchInputRecOpened
     ? `${s.search_wrapper} ${s.search_wrapper__opened_rec}`

@@ -1,7 +1,7 @@
 import * as axios from 'axios'
 
 export const instance = axios.create({
-  baseURL: process.env.baseURL,
+  baseURL: process.env.apiURL,
 })
 
 export const LoadVideos = async ({ call, query, page, count }) => {
