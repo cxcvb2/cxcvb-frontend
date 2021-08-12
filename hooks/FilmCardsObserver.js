@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 
-export default function filmCardObserver({ router, resultLength, resLength }) {
+export default function FilmCardObserver({ router, resLength }) {
   const observedEl = useRef(null)
 
   useEffect(() => {
@@ -9,7 +9,7 @@ export default function filmCardObserver({ router, resultLength, resLength }) {
       threshold: 0,
     }
     let callback = function (entry) {
-      if (entry[0].isIntersecting && resultLength) {
+      if (entry[0].isIntersecting) {
         let page = router.query.p || 1
         let paramsquery = {
           query: router.query.query,
@@ -36,6 +36,6 @@ export default function filmCardObserver({ router, resultLength, resLength }) {
       observer.disconnect()
     }
   }, [router.query])
-  console.log(resLength)
-  return <div style={{ display: !resLength && 'none' }} ref={observedEl} />
+ 
+  return <div style={{ display: resLength < 6 && 'none' }} ref={observedEl} />
 }

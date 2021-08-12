@@ -1,18 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import s from './KeyCodeInput.module.css'
-import { useStore } from 'effector-react/ssr'
-import {
-  $changeKeyCode,
-  $IsKeyInputOpened,
-  $openkeyInput,
-} from '../../../../store/model'
-import { useEvent } from 'effector-react/ssr'
+import { changeKeyCodeAction } from '../../../../redux/store'
+import { useDispatch } from 'react-redux'
 
 export default function KeyCodeInput({ inputRef }) {
+  const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState('')
-  const IsKeyInputOpened = useStore($IsKeyInputOpened)
-  const changeKeyCode = useEvent($changeKeyCode)
-  const openKeyInput = useEvent($openkeyInput)
+  const [isKeyInputOpened, setIsKeyInputOpened] = useState(false)
   const keyInputRef = useRef()
   const [onKeydownTimeout, setOnKeydownTimeout] = useState(null)
 
@@ -23,12 +17,14 @@ export default function KeyCodeInput({ inputRef }) {
         document.activeElement !== inputRef.current
       ) {
         if (49 <= Number(e.keyCode) && Number(e.keyCode) <= 57) {
-          openKeyInput()
+          setIsKeyInputOpened(true)
           keyInputRef.current.focus()
         } else if (48 === Number(e.keyCode)) {
-          // when state is 0 and user lose focus of input and press again 0 component doesnt rerender, for that setCayCode(null) to rerender
-          changeKeyCode(null)
-          changeKeyCode(0)
+          setTimeout(() => {
+            //on focus to input value appends 0: stop for don't appending
+            inputRef.current.focus()
+          }, 1)
+          dispatch(changeKeyCodeAction(0))
         }
       }
     }
@@ -36,13 +32,16 @@ export default function KeyCodeInput({ inputRef }) {
     return () => {
       document.removeEventListener('keydown', onKeydown)
     }
-  }, [inputRef, changeKeyCode, openKeyInput])
+  }, [inputRef, changeKeyCodeAction, setIsKeyInputOpened])
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
-    value && changeKeyCode(value)
+    console.log(value)
+    if (value) {
+      dispatch(changeKeyCodeAction(value))
+    }
     setInputValue('')
-    openKeyInput()
+    setIsKeyInputOpened(false)
   }
 
   const handleOnChange = (event) => {
@@ -66,7 +65,7 @@ export default function KeyCodeInput({ inputRef }) {
     keyCodechangeing(inputValue)
   }
 
-  const KeyCodeInputClasses = !IsKeyInputOpened
+  const KeyCodeInputClasses = !isKeyInputOpened
     ? `${s.KeyCodeInput_wrapper} ${s.KeyCodeInput_Hidden}`
     : s.KeyCodeInput_wrapper
 

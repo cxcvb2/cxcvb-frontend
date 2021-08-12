@@ -2,11 +2,10 @@ import s from './header.module.css'
 import SearchInput from '../auxiliary-elements/Inputs/SearchInput/SearchInput'
 import Link from 'next/link'
 import Navigation from '../Navigation/Navigation'
-import { $keyCode } from '../../store/model'
-import { useStore } from 'effector-react/ssr'
+import { useSelector } from 'react-redux'
 
 export default function Header({ inputRef }) {
-  const keyCode = useStore($keyCode)
+  const keyCode = useSelector((state) => state.keyCode)
 
   return (
     <header>
@@ -16,7 +15,7 @@ export default function Header({ inputRef }) {
             <h1 className={s.header__title}>cxcvb</h1>
           </a>
         </Link>
-        {/* <SearchInput keyCode={keyCode} inputRef={inputRef} /> */}
+        <SearchInput inputRef={inputRef} />
       </div>
       <Navigation keyCode={keyCode} />
     </header>

@@ -2,11 +2,10 @@ import s from './FilmCardsCheck.module.css'
 import FilmCard from './FilmCard.jsx'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useStore } from 'effector-react/ssr'
-import { $keyCode } from '../../../store/model'
+import { useSelector } from 'react-redux'
 
 export default function FilmCardsCheck({ result }) {
-  const keyCode = useStore($keyCode)
+  const keyCode = useSelector((state) => state.keyCode)
   const router = useRouter()
   const { opened } = router.query
 
@@ -28,7 +27,7 @@ export default function FilmCardsCheck({ result }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [keyCode, router, result])
+  }, [keyCode, result])
 
   const filmCards_wrapperClasses = opened
     ? `${s.filmCards_wrapper_mb} ${s.filmCards_wrapper} `

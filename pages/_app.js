@@ -3,18 +3,17 @@ import React from 'react'
 import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import useLang from '../content/locale'
-import { Provider as EffectorProvider } from 'effector-react/ssr'
-import { useScope } from '../store/useScope'
-import { app } from '../store/model'
 import MainLayout from '../components/Layout/MainLayout'
 import { useRouter } from 'next/router'
+import { Provider } from 'react-redux'
+import { useStore } from '../redux/store'
 
 function MyApp({ Component, pageProps }) {
+  const store = useStore(pageProps.initialReduxState)
   const router = useRouter()
-  const scope = useScope(app, pageProps.initialState)
   const { messages, locale, defaultLocale } = useLang(router)
   return (
-    <EffectorProvider value={scope}>
+    <Provider store={store}>
       <IntlProvider
         locale={locale}
         defaultLocale={defaultLocale}
@@ -24,7 +23,7 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </MainLayout>
       </IntlProvider>
-    </EffectorProvider>
+    </Provider>
   )
 }
 

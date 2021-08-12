@@ -27,7 +27,6 @@ export const LoadInputCompleteRec = async ({ query, call }) => {
       'videos/prediction': { query },
     })
     .then((response) => {
-      console.log(response.data)
       return response.data
     })
     .catch((e) => {

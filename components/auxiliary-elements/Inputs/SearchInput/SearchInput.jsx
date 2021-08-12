@@ -2,30 +2,22 @@ import Image from 'next/image'
 import s from './SearchInput.module.css'
 import { useIntl } from '../../../../hooks/useIntl'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { LoadInputCompleteRec } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
 
-export default function SearchInput({ inputRef, keyCode }) {
+export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInputVal, setSearchInputVal] = useState(query || '')
+  const [searchInputVal, setSearchInputVal] = useState('')
   const [searchCardsTimeout, setSearchCardsTimeout] = useState(null)
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
+  const searchInputWrapper = useRef()
 
-  useEffect(() => {
-    if (keyCode === 0) {
-      //on focus to input value appends 0: stop for don't appending
-      setTimeout(() => {
-        inputRef.current.focus()
-      }, 1)
-    }
-  }, [keyCode, inputRef])
   const loadRecomendation = async (value) => {
     if (value.replace(/\s/g, '').length && query !== value) {
-      console.log(value)
       const { result } = await LoadInputCompleteRec({ call: 1, query: value })
       setSearchInputRec(result)
       if (result.length) {
@@ -33,14 +25,13 @@ export default function SearchInput({ inputRef, keyCode }) {
       } else {
         setIsSearchInputRecOpened(false)
       }
-      console.log(result)
     }
   }
 
   const handleSearchSubmit = (e) => {
+    clearTimeout(searchCardsTimeout)
     e.preventDefault()
     if (searchInputVal.replace(/\s/g, '')?.length && query !== searchInputVal) {
-      console.log(searchInputVal.replace(/\s/g, ''))
       router.push(`/${searchInputVal}?p=1`)
       setIsSearchInputRecOpened(false)
     }
@@ -62,7 +53,7 @@ export default function SearchInput({ inputRef, keyCode }) {
     : s.search_wrapper
 
   return (
-    <div className={s.search_input_rec}>
+    <div className={s.search_input_rec} ref={searchInputWrapper}>
       <form
         autoComplete="off"
         onSubmit={handleSearchSubmit}
@@ -87,11 +78,15 @@ export default function SearchInput({ inputRef, keyCode }) {
           maxLength="50"
         />
       </form>
-      <SearchInputRecDropdown
-        searchInputRec={searchInputRec}
-        isSearchInputRecOpened={isSearchInputRecOpened}
-        setIsSearchInputRecOpened={setIsSearchInputRecOpened}
-      />
+      {searchInputRec.length && isSearchInputRecOpened ? (
+        <SearchInputRecDropdown
+          searchInputRec={searchInputRec}
+          isSearchInputRecOpened={isSearchInputRecOpened}
+          setIsSearchInputRecOpened={setIsSearchInputRecOpened}
+          setSearchInputVal={setSearchInputVal}
+          searchInputWrapper={searchInputWrapper}
+        />
+      ) : null}
     </div>
   )
 }
