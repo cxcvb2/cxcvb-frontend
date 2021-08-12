@@ -6,10 +6,14 @@ export default function VideoLayout({ opened, result }) {
   const router = useRouter()
   // const [currentVideo, setCurrentVideo] = useState({})
   const closeVideoLayoutHandler = () => {
-    router.replace(router.query.query, undefined, { shallow: true })
+    let p = router.query.p
+    router.push(`/${router.query.query}?p=${p}`, undefined, {
+      shallow: true,
+      scroll: false,
+    })
   }
   const currentVideo = result.find((video) => {
-    if (opened === video.source) return video
+    if (opened === video?.source) return video
   })
 
   return (

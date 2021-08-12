@@ -7,14 +7,21 @@
   grid-template-columns: 1fr 1fr;
 }
 
-@media (max-width: 775px) {
+@media (max-width: 1555px) {
+  .main {
+    padding: 50px 0;
+  }
+  .main_two_columns {
+    grid-template-columns: min-content 1fr;
+  }
+}
+
+@media (max-width: 800px) {
   .main_two_columns {
     display: block;
   }
-  .filmCards_wrapper {
-    justify-content: center;
-  }
 }
+
 @media (max-width: 510px) {
   .main {
     padding: 23px 0;

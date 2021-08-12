@@ -4,13 +4,32 @@
   margin-left: -80px;
   margin-top: -50px;
 }
-@media (max-width: 775px) {
+@media (max-width: 800px) {
+  .filmCards_wrapper_mb {
+    margin-bottom: 190px;
+  }
   .filmCards_wrapper {
-    justify-content: center;
+    flex-direction: column;
+    margin-left: 0;
+  }
+}
+@media (max-width: 775px) {
+  .filmCards_wrapper_mb {
+    margin-bottom: 44vw;
+  }
+}
+@media (max-width: 600px) {
+  .filmCards_wrapper_mb {
+    margin-bottom: 32vw;
   }
 }
 @media (max-width: 510px) {
   .filmCards_wrapper {
     margin-top: -15px;
+  }
+}
+@media (max-width: 400px) {
+  .filmCards_wrapper_mb {
+    margin-bottom: 25vw;
   }
 }

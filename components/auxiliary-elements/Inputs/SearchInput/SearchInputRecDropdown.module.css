@@ -1,0 +1,29 @@
+.searchInputRec_wrapper {
+  background-color: #2e2867;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  padding-bottom: 0.8rem;
+  padding-top: 0;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 0 47px 45px -12px #131128;
+}
+.searchInputRec_el {
+  font-size: 18px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.searchInputRec_el:hover {
+  background-color: #252255;
+}
+@media (max-width: 800px) {
+  .searchInputRec_el {
+    font-size: 14px;
+    padding: 0.4rem 0.7rem;
+  }
+}

@@ -6,7 +6,7 @@ export default function CurrentVideoCheck({ currentVideo }) {
       {currentVideo ? (
         <>
           <iframe
-            src={`${currentVideo.source}?autoplay=1&mute=1`}
+            src={`${currentVideo.source}`}
             title={`${currentVideo.host}'s video`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
