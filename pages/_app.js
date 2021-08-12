@@ -7,10 +7,12 @@ import { Provider as EffectorProvider } from 'effector-react/ssr'
 import { useScope } from '../store/useScope'
 import { app } from '../store/model'
 import MainLayout from '../components/Layout/MainLayout'
+import { useRouter } from 'next/router'
 
-function MyApp({ Component, pageProps, messages, locale, defaultLocale }) {
+function MyApp({ Component, pageProps }) {
+  const router = useRouter()
   const scope = useScope(app, pageProps.initialState)
-
+  const { messages, locale, defaultLocale } = useLang(router)
   return (
     <EffectorProvider value={scope}>
       <IntlProvider
@@ -52,9 +54,8 @@ MyApp.getInitialProps = async (appContext) => {
       appContext.ctx.res.end()
     }
   }
-  const { messages, locale, defaultLocale } = useLang(appContext.router)
 
-  return { ...appProps, messages, locale, defaultLocale }
+  return { ...appProps }
 }
 
 export default MyApp

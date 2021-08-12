@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 let scope
 
 function initializeScope(domain, initialData) {
-  console.log('initializeScope')
   const _scope = fork(domain, {
     values: {
       ...(scope ? serialize(scope, { onlyChanges: true }) : {}),

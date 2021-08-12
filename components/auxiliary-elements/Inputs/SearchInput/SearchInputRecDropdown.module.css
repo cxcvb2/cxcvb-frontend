@@ -1,0 +1,19 @@
+.searchInputRec_wrapper {
+  background-color: #2e2867;
+  position: absolute;
+  width: 100%;
+  padding-bottom: 0.8rem;
+  padding-top: 0;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+.searchInputRec_el {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+.searchInputRec_el:hover {
+  background-color: #252255;
+}

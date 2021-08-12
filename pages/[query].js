@@ -1,73 +1,65 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import s from '../styles/SearchedPage.module.css'
 import FilmCardsCheck from '../components/auxiliary-elements/filmCard/FilmCardsCheck'
 import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayout'
 import { useRouter } from 'next/router'
-import { useStore } from 'effector-react/ssr'
-import { $filmCards, FetchFilmCards } from '../store/model'
-import { allSettled, fork, serialize } from 'effector'
-import { app } from '../store/model'
-
-export default function SaerchedPage() {
-  const result = useStore($filmCards)
+// import { useStore } from 'effector-react/ssr'
+// import { allSettled, fork, serialize } from 'effector'
+// import { addFilmCards, app } from '../store/model'
+// import { $filmCards } from '../store/model'
+import { LoadVideos } from '../api/api'
+import FilmCardsObserver from '../hooks/FilmCardsObserver'
+export default function SaerchedPage({ res }) {
+  const [result, setResult] = useState(res)
   const router = useRouter()
   const { opened } = router.query
-  const observedEl = useRef(null)
-  console.log(result, 'result')
+
   useEffect(() => {
-    let options = {
-      rootMargin: '0px',
-      threshold: 0,
+    console.log(res.length)
+    if (result.length) {
+      setResult([])
     }
-    let callback = function (entry) {
-      if (entry[0].isIntersecting && result.length) {
-        console.log(router.query.p, 'page')
-        let page = router.query.p || 1
-        router.push(
-          {
-            pathname: '/[query]',
-            query: {
-              query: router.query.query,
-              p: ++page,
-              opened: router.query.opened,
-            },
-          },
-          undefined,
-          { scroll: false }
-        )
-        console.log('v')
-      }
-    }
-    let observer = new IntersectionObserver(callback, options)
-    observer.observe(observedEl.current)
-    return () => {
-      observer.disconnect()
-    }
-  }, [router.query.p, result])
+  }, [router.query.query])
+
+  useEffect(() => {
+    setResult((result) => [...result, ...res])
+  }, [res])
 
   const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
   return (
     <main className={mainclasses}>
       <FilmCardsCheck result={result} />
       {opened && <VideoLayout result={result} opened={opened} />}
-      <div className={s.filmCards_Loader_observer} ref={observedEl} />
+      <FilmCardsObserver
+        router={router}
+        result={result}
+        resLength={res.length}
+        resultLength={result.length}
+      />
     </main>
   )
 }
 
 export const getServerSideProps = async ({ query }) => {
   const page = query.p || 1
-  const scope = fork(app)
-  await allSettled(FetchFilmCards, {
-    scope,
-    params: {
-      call: 1,
-      query,
-      page,
-    },
-  })
+  const res = await LoadVideos({ call: 1, query: query.query, page, count: 6 })
 
   return {
-    props: { initialState: serialize(scope, { onlyChanges: true }) },
+    props: {
+      res: res.result,
+    },
   }
+  // const scope = fork(app)
+  // await allSettled(addFilmCards, {
+  //   scope,
+  //   params: {
+  //     call: 1,
+  //     query,
+  //     count: 6,
+  //   },
+  // })
+
+  // return {
+  //   props: { initialState: serialize(scope, { onlyChanges: true }) },
+  // }
 }

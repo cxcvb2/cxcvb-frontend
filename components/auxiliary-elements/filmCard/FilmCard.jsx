@@ -42,7 +42,12 @@ export default function FilmCard({
         <div className={s.filmcard__host_ind}>
           <p className={s.filmcard__host}>{host}</p>
           <div className={s.filmcard__remotecontroller_ind}>
-            <Image src="/images/remote-controller.svg" width={25} height={32} />
+            <Image
+              src="/images/remote-controller.svg"
+              width={25}
+              height={32}
+              alt=""
+            />
             <p className={s.filmcard_ind}>{ind}</p>
           </div>
         </div>

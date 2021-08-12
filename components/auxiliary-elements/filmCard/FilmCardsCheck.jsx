@@ -2,7 +2,7 @@ import s from './FilmCardsCheck.module.css'
 import FilmCard from './FilmCard.jsx'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from 'effector-react/ssr'
 import { $keyCode } from '../../../store/model'
 
 export default function FilmCardsCheck({ result }) {
@@ -15,7 +15,6 @@ export default function FilmCardsCheck({ result }) {
     //   router.push(`${router.asPath}?opened=${result[0]?.source}`)
     // }
     if (keyCode - 10 <= result.length - 1 && keyCode && keyCode >= 10) {
-      console.log(keyCode - 10, result.length)
       router.push(
         {
           pathname: '/[query]',
@@ -29,24 +28,23 @@ export default function FilmCardsCheck({ result }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [keyCode])
+  }, [keyCode, router, result])
 
   const filmCards_wrapperClasses = opened
     ? `${s.filmCards_wrapper_mb} ${s.filmCards_wrapper} `
     : s.filmCards_wrapper
 
   return (
-    <div suppressHydrationWarning>{JSON.stringify(result)}</div>
-    // <>
-    //   {result.length ? (
-    //     <h1>There are no video in this query - {router.query.query}</h1>
-    //   ) : (
-    //     <div className={filmCards_wrapperClasses}>
-    //       {result.map((el, ind) => (
-    //         <FilmCard {...el} ind={ind + 10} key={el?.source} />
-    //       ))}
-    //     </div>
-    //   )}
-    // </>
+    <>
+      {!result.length ? (
+        <h1>There are no video in this query - {router.query.query}</h1>
+      ) : (
+        <div className={filmCards_wrapperClasses}>
+          {result.map((el, ind) => (
+            <FilmCard {...el} ind={ind + 10} key={ind} />
+          ))}
+        </div>
+      )}
+    </>
   )
 }

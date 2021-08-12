@@ -27,7 +27,7 @@ export default function Navigation({ keyCode }) {
         break
       }
     }
-  }, [keyCode])
+  }, [keyCode, push])
 
   return (
     <>

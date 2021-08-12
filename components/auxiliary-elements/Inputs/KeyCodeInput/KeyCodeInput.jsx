@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import s from './KeyCodeInput.module.css'
-import { useStore } from 'effector-react'
+import { useStore } from 'effector-react/ssr'
 import {
-  changeKeyCode,
+  $changeKeyCode,
   $IsKeyInputOpened,
-  openKeyInput,
+  $openkeyInput,
 } from '../../../../store/model'
+import { useEvent } from 'effector-react/ssr'
 
 export default function KeyCodeInput({ inputRef }) {
   const [inputValue, setInputValue] = useState('')
   const IsKeyInputOpened = useStore($IsKeyInputOpened)
+  const changeKeyCode = useEvent($changeKeyCode)
+  const openKeyInput = useEvent($openkeyInput)
   const keyInputRef = useRef()
   const [onKeydownTimeout, setOnKeydownTimeout] = useState(null)
 
@@ -33,11 +36,10 @@ export default function KeyCodeInput({ inputRef }) {
     return () => {
       document.removeEventListener('keydown', onKeydown)
     }
-  }, [])
+  }, [inputRef, changeKeyCode, openKeyInput])
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
-    console.log('change ', value)
     value && changeKeyCode(value)
     setInputValue('')
     openKeyInput()

@@ -1,29 +1,52 @@
-import { createDomain } from 'effector'
+import { createDomain, sample } from 'effector'
 import { LoadVideos } from '../api/api'
 
 export const app = createDomain('rootDomain')
 
 export const addFilmCards = app.createEvent()
-const $filmCards = app.createStore([], { sid: 'filmCards' })
+export const $filmCards = app.createStore([], { sid: 'filmCards' })
+
+// $filmCards.on(addFilmCards, (state, filmcards) => {
+//   console.log(state, 'state', $filmCards.getState())
+//   return [...state, ...filmcards]
+// })
+
 export const FetchFilmCards = app.createEffect(
-  async ({ call, query, page }) => {
+  async ({ call, query, count, state, ...s }) => {
+    console.log({ call, query, count, state, s })
+    const page = query.p || 1
     const { result } = await LoadVideos({
       call,
-      query,
-      p: page,
+      query: query.query,
+      page,
+      count,
     })
+
     return result
   }
 )
 
-$filmCards.on(FetchFilmCards.doneData, (prevFilmCards, FilmCards) => {
-  return [...prevFilmCards, ...FilmCards]
+sample({
+  clock: addFilmCards,
+  source: $filmCards,
+  fn: (state, filmCards) => {
+    console.log(state, 'state', filmCards, 'card')
+    return { state, ...filmCards }
+  },
+  target: FetchFilmCards,
 })
 
-export const changeKeyCode = app.createEvent()
-export const $keyCode = app.createStore(null)
-$keyCode.on(changeKeyCode, (_, key) => key)
+// FetchFilmCards.doneData.watch((state) => {
+//   addFilmCards([...state])
+// })
+$filmCards.on(FetchFilmCards.doneData, (state, FilmCards) => {
+  return [...state, ...FilmCards]
+})
 
-export const openKeyInput = app.createEvent()
+export const $changeKeyCode = app.createEvent()
+export const $keyCode = app.createStore(null)
+$keyCode.on($changeKeyCode, (_, key) => key)
+
+export const $openkeyInput = app.createEvent()
 export const $IsKeyInputOpened = app.createStore(false)
-$IsKeyInputOpened.on(openKeyInput, (openclose) => !openclose)
+$IsKeyInputOpened.on($openkeyInput, (openclose) => !openclose)
