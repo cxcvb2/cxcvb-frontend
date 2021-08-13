@@ -1,5 +1,5 @@
 import s from '../styles/404.module.css'
-// import { useIntl } from '../hooks/useIntl'
+// import { useIntl } from '../hooks-utils/useIntl'
 
 export default function DashboardPage() {
   // const { f } = useIntl()

@@ -24,7 +24,7 @@ export const LoadInputCompleteRec = async ({ query, call }) => {
   return await instance
     .post('/api', {
       call,
-      'videos/prediction': { query },
+      'videos/predict': { query },
     })
     .then((response) => {
       return response.data
@@ -32,6 +32,6 @@ export const LoadInputCompleteRec = async ({ query, call }) => {
     .catch((e) => {
       console.log(e)
       //when we crate 404 page its will redirect there
-      return { result: null }
+      return { result: [] }
     })
 }

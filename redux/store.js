@@ -55,9 +55,7 @@ export const initializeStore = (preloadedState) => {
   // After navigating to a page with an initial Redux state, merge that state
   // with the current state in the store, and create a new store
   if (typeof window === 'undefined') {
-    console.log(_store?.getState(), 'storeeeeeeeeee', store?.getState())
-
-    return _store
+      return _store
   }
   if (preloadedState && store) {
     _store = initStore({

@@ -10,10 +10,10 @@ export default function FilmCardsCheck({ result }) {
   const { opened } = router.query
 
   useEffect(() => {
-    // if (!router.query.opened && result.length) {
+    // if (!router.query.opened && result?.length) {
     //   router.push(`${router.asPath}?opened=${result[0]?.source}`)
     // }
-    if (keyCode - 10 <= result.length - 1 && keyCode && keyCode >= 10) {
+    if (keyCode - 10 <= result?.length - 1 && keyCode && keyCode >= 10) {
       router.push(
         {
           pathname: '/[query]',
@@ -35,7 +35,7 @@ export default function FilmCardsCheck({ result }) {
 
   return (
     <>
-      {!result.length ? (
+      {!result?.length ? (
         <h1>There are no video in this query - {router.query.query}</h1>
       ) : (
         <div className={filmCards_wrapperClasses}>

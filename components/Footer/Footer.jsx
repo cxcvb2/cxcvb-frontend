@@ -1,6 +1,6 @@
 import DecoratedLink from '../auxiliary-elements/DecoratedLink/DecoratedLink'
 import s from './Footer.module.css'
-import { useIntl } from '../../hooks/useIntl'
+import { useIntl } from '../../hooks-utils/useIntl'
 
 export default function Footer() {
   const { f } = useIntl()

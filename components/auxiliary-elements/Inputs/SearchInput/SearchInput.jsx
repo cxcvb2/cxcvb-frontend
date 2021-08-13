@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import s from './SearchInput.module.css'
-import { useIntl } from '../../../../hooks/useIntl'
+import { useIntl } from '../../../../hooks-utils/useIntl'
 import { useRouter } from 'next/router'
 import { useState, useRef } from 'react'
 import { LoadInputCompleteRec } from '../../../../api/api'
@@ -19,7 +19,7 @@ export default function SearchInput({ inputRef }) {
     if (value.replace(/\s/g, '').length && query !== value) {
       const { result } = await LoadInputCompleteRec({ call: 1, query: value })
       setSearchInputRec(result)
-      if (result.length) {
+      if (result?.length) {
         setIsSearchInputRecOpened(true)
       } else {
         setIsSearchInputRecOpened(false)

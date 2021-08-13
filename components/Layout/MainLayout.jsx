@@ -26,7 +26,7 @@ export default function MainLayout({ children }) {
       Router.events.off('routeChangeError', end)
     }
   }, [])
-  console.log('main')
+
   return (
     <>
       <Head>

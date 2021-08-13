@@ -2,8 +2,11 @@ import { useState, useEffect, useRef } from 'react'
 import s from './KeyCodeInput.module.css'
 import { changeKeyCodeAction } from '../../../../redux/store'
 import { useDispatch } from 'react-redux'
+import NavigateOnKeyCodeChange from '../../../../hooks-utils/NavigateOnKeyCodeChange'
+import { useRouter } from 'next/router'
 
 export default function KeyCodeInput({ inputRef }) {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState('')
   const [isKeyInputOpened, setIsKeyInputOpened] = useState(false)
@@ -36,8 +39,9 @@ export default function KeyCodeInput({ inputRef }) {
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
-    console.log(value)
+   
     if (value) {
+      NavigateOnKeyCodeChange({ keyCode: value, router })
       dispatch(changeKeyCodeAction(value))
     }
     setInputValue('')

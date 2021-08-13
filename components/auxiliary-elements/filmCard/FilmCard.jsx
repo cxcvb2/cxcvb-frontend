@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import s from './FilmCard.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
+import skl from '../../../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css'
 
 export default function FilmCard({
   title,
@@ -12,6 +14,7 @@ export default function FilmCard({
   ind,
 }) {
   const { query } = useRouter()
+  const [imageIsLoaded, setImageIsLoaded] = useState(true)
   const filmcardIsActive =
     query.opened === source ? `${s.filmcard} ${s.filmcard__active}` : s.filmcard
 
@@ -19,7 +22,12 @@ export default function FilmCard({
     thumbnail !== '/images/not-thumbnail.png'
       ? `/api/imageproxy?url=${encodeURIComponent(thumbnail)}`
       : thumbnail
+
   const page = query.p || 1
+  const isSkeleton = imageIsLoaded
+    ? `${s.filmcard__img} ${skl.skeleton}`
+    : s.filmcard__img
+
   return (
     <section className={filmcardIsActive}>
       <Link
@@ -27,12 +35,15 @@ export default function FilmCard({
         scroll={false}
         shallow
       >
-        <a className={s.filmcard__img}>
+        <a className={isSkeleton}>
           <Image
             src={filmCardImg}
             layout="fill"
             alt={host}
             className={s.image}
+            onLoad={() => {
+              setImageIsLoaded(false)
+            }}
           />
         </a>
       </Link>

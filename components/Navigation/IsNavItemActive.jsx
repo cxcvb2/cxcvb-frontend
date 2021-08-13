@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import s from './Navigation.module.css'
 import Link from 'next/link'
-import { useIntl } from '../../hooks/useIntl'
+import { useIntl } from '../../hooks-utils/useIntl'
 
 export default function IsNavItemActive({ navItems }) {
   const { pathname } = useRouter()

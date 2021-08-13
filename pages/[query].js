@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import s from '../styles/SearchedPage.module.css'
-import FilmCardsCheck from '../components/auxiliary-elements/filmCard/FilmCardsCheck'
+import FilmCardsCheck from '../components/auxiliary-elements/FilmCard/FilmCardsCheck'
 import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayout'
 import { useRouter } from 'next/router'
 import { LoadVideos } from '../api/api'
-import FilmCardsObserver from '../hooks/FilmCardsObserver'
+import FilmCardsObserver from '../hooks-utils/FilmCardsObserver'
 
 export default function SaerchedPage({ res }) {
   // const filmCards = useSelector((state) => state.filmCards)
@@ -12,8 +12,7 @@ export default function SaerchedPage({ res }) {
   const { opened } = router.query
   const [result, setResult] = useState(res)
   useEffect(() => {
-    console.log(res.length)
-    if (result.length) {
+    if (result?.length) {
       setResult([])
     }
   }, [router.query.query])
@@ -29,7 +28,7 @@ export default function SaerchedPage({ res }) {
       <FilmCardsObserver
         router={router}
         result={result}
-        resLength={res.length}
+        resLength={res?.length}
       />
     </main>
   )
@@ -39,7 +38,7 @@ export const getServerSideProps = async ({ query }) => {
   // const reduxStore = initializeStore()
   // console.log(reduxStore.getState(), 'cardd')
   // const { dispatch } = reduxStore
-  const page = query.p || 1
+  const page = Number(query.p) || 1
   const res = await LoadVideos({ call: 1, query: query.query, page, count: 6 })
   // dispatch(addFilmCardsAction(res.result))
   return {
