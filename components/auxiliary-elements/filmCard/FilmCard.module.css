@@ -12,6 +12,7 @@
   border-radius: 15px;
   margin-left: 80px;
   margin-top: 50px;
+  background-color: #2e2867;
 }
 .filmcard:hover {
   box-shadow: 0px 0px 36px #131128;

@@ -1,16 +1,10 @@
 /*-------- shine animation --------*/
 
-.skeleton,
-.skeleton_layout {
+.skeleton {
   position: relative !important;
   overflow: hidden;
 }
-.skeleton_layout::after {
-  z-index: 2;
-}
-.skeleton:after {
-  z-index: -1;
-}
+
 .skeleton_layout::after,
 .skeleton:after {
   content: '';
@@ -20,7 +14,7 @@
   border-radius: 10px;
   position: absolute;
   animation: slide 1.5s infinite;
-
+  z-index: 1;
   background: -moz-linear-gradient(
     left,
     rgba(255, 255, 255, 0) 0%,

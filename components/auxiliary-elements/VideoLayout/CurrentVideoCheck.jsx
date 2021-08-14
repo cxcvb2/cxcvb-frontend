@@ -5,8 +5,8 @@ import skl from '../../../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css
 export default function CurrentVideoCheck({ currentVideo }) {
   const [iframeIsLoaded, setIframeIsLoaded] = useState(true)
   const isSkeleton = iframeIsLoaded
-    ? `${s.videoLayout__video_wrapper} ${skl.skeleton_layout}`
-    : `${s.videoLayout__video_wrapper} ${skl.skeleton_layout}`
+    ? `${s.videoLayout__video_wrapper} ${skl.skeleton}`
+    : s.videoLayout__video_wrapper
 
   return (
     <>
