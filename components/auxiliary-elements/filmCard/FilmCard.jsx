@@ -2,17 +2,10 @@ import { useRouter } from 'next/router'
 import s from './FilmCard.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import skl from '../../../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css'
 
-export default function FilmCard({
-  title,
-  description,
-  source,
-  thumbnail,
-  host,
-  ind,
-}) {
+const FilmCard = ({ title, description, source, thumbnail, host, ind }) => {
   const { query } = useRouter()
   const [imageIsLoaded, setImageIsLoaded] = useState(true)
   const filmcardIsActive =
@@ -66,3 +59,5 @@ export default function FilmCard({
     </section>
   )
 }
+
+export default FilmCard
