@@ -43,7 +43,7 @@ export default function FilmCard({
             alt={host}
             className={s.image}
             onLoad={() => {
-              console.log('load', source)
+              setImageIsLoaded(false)
             }}
           />
         </a>
