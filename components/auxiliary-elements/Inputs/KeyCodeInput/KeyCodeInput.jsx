@@ -19,10 +19,10 @@ export default function KeyCodeInput({ inputRef }) {
         document.activeElement !== keyInputRef.current &&
         document.activeElement !== inputRef.current
       ) {
-        if (49 <= Number(e.keyCode) && Number(e.keyCode) <= 57) {
+        if (49 <= parseInt(e.keyCode) && parseInt(e.keyCode) <= 57) {
           setIsKeyInputOpened(true)
           keyInputRef.current.focus()
-        } else if (48 === Number(e.keyCode)) {
+        } else if (48 === parseInt(e.keyCode)) {
           setTimeout(() => {
             //on focus to input value appends 0: stop for don't appending
             inputRef.current.focus()
@@ -39,7 +39,7 @@ export default function KeyCodeInput({ inputRef }) {
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
-   
+
     if (value) {
       NavigateOnKeyCodeChange({ keyCode: value, router })
       dispatch(changeKeyCodeAction(value))
@@ -50,8 +50,8 @@ export default function KeyCodeInput({ inputRef }) {
 
   const handleOnChange = (event) => {
     let value = inputValue
-    if (Number(event.target.value)) {
-      value = Number(event.target.value)
+    if (parseInt(event.target.value)) {
+      value = parseInt(event.target.value)
     } else if (event.target.value === '') {
       value = event.target.value
     }

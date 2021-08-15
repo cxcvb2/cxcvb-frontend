@@ -10,13 +10,13 @@ export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInputVal, setSearchInputVal] = useState('')
+  const [searchInputVal, setSearchInputVal] = useState(query || '')
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
 
   const loadRecomendation = async (value) => {
-    if (value.replace(/\s/g, '').length && query !== value) {
+    if (value.trim().length && query !== value) {
       const { result } = await LoadInputCompleteRec({ call: 1, query: value })
       setSearchInputRec(result)
       if (result?.length) {
@@ -29,12 +29,12 @@ export default function SearchInput({ inputRef }) {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
-    if (searchInputVal.replace(/\s/g, '')?.length && query !== searchInputVal) {
+    setIsSearchInputRecOpened(false)
+    if (searchInputVal.trim().length && query !== searchInputVal) {
       router.push(`/${searchInputVal}?p=1`)
-      setIsSearchInputRecOpened(false)
     }
   }
-
+  s
   const handleSearchonChange = (e) => {
     e.target.value === '' && setIsSearchInputRecOpened(false)
     setSearchInputVal(e.target.value)
@@ -53,6 +53,7 @@ export default function SearchInput({ inputRef }) {
       >
         <label className={s.searchIcon__wrapper} htmlFor="searchInputVal">
           <Image
+            draggable="false"
             src="/images/searchIcon.svg"
             width={30}
             height={30}
@@ -67,8 +68,17 @@ export default function SearchInput({ inputRef }) {
           placeholder={f('search') + '(0)'}
           value={searchInputVal}
           onChange={handleSearchonChange}
-          maxLength="50"
+          maxLength="100"
         />
+        {searchInputVal.length ? (
+          <div
+            className={s.searchInput__remove_text}
+            onClick={() => {
+              setSearchInputVal('')
+              setIsSearchInputRecOpened(false)
+            }}
+          />
+        ) : null}
       </form>
       {searchInputRec.length && isSearchInputRecOpened ? (
         <SearchInputRecDropdown

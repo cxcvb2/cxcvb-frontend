@@ -1,12 +1,16 @@
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { changeKeyCodeAction } from '../../../redux/store'
 import CurrentVideoCheck from './CurrentVideoCheck'
 import s from './VideoLayout.module.css'
 
 export default function VideoLayout({ opened, result }) {
   const router = useRouter()
+  const dispatch = useDispatch()
   // const [currentVideo, setCurrentVideo] = useState({})
   const closeVideoLayoutHandler = () => {
     let p = router.query.p
+    dispatch(changeKeyCodeAction(null))
     router.push(`/${router.query.query}?p=${p}`, undefined, {
       shallow: true,
       scroll: false,

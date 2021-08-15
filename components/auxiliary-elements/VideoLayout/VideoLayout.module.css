@@ -1,5 +1,6 @@
 .videoLayout_wrapper {
   position: relative;
+
   margin-left: 30px;
 }
 .videoLayout__content::-webkit-scrollbar {
@@ -17,7 +18,7 @@
 .videoLayout__content {
   overflow-y: scroll;
   padding: 20px;
-  max-height: 30vh;
+  max-height: 35vh;
 }
 
 .videoLayout {
@@ -30,6 +31,7 @@
   max-height: calc(100vh - 45px);
   background: #2e2867;
   border-radius: 0 0 15px 15px;
+  box-shadow: 0px 0px 36px #131128;
 }
 .videoLayout__video_wrapper {
   height: 23vw;
@@ -123,7 +125,11 @@
     right: -2px;
   }
 }
-
+@media (max-width: 510px) {
+  .videoLayout__video_wrapper {
+    height: 63vw;
+  }
+}
 /* x in videoLayout__close  */
 .videoLayout__close:hover {
   opacity: 1;

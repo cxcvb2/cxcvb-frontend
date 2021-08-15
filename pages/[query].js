@@ -13,12 +13,17 @@ export default function SaerchedPage({ res }) {
   const [result, setResult] = useState(res)
   useEffect(() => {
     if (result?.length) {
+      console.log('query change')
       setResult([])
     }
   }, [router.query.query])
+
   useEffect(() => {
-    setResult((result) => [...result, ...res])
-  }, [res])
+    setResult((result) => {
+      console.log(result, 'res change')
+      return [...result, ...res]
+    })
+  }, [router.query.p])
 
   const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
   return (
@@ -38,9 +43,10 @@ export const getServerSideProps = async ({ query }) => {
   // const reduxStore = initializeStore()
   // console.log(reduxStore.getState(), 'cardd')
   // const { dispatch } = reduxStore
-  const page = Number(query.p) || 1
+  const page = parseInt(query.p) || 1
   const res = await LoadVideos({ call: 1, query: query.query, page, count: 6 })
   // dispatch(addFilmCardsAction(res.result))
+
   return {
     props: {
       res: res.result,

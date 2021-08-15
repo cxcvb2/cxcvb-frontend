@@ -20,7 +20,7 @@ export default function FilmCardsCheck({ result }) {
           query: {
             query: router.query.query,
             p: router.query.p || 1,
-            opened: encodeURI(result[keyCode - 10]?.source),
+            opened: result[keyCode - 10]?.source,
           },
         },
         undefined,
@@ -40,7 +40,7 @@ export default function FilmCardsCheck({ result }) {
       ) : (
         <div className={filmCards_wrapperClasses}>
           {result.map((el, ind) => (
-            <FilmCard {...el} ind={ind + 10} key={ind} />
+            <FilmCard {...el} ind={ind + 10} key={ind} opened={opened} />
           ))}
         </div>
       )}
