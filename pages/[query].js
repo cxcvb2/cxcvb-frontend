@@ -5,52 +5,38 @@ import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayou
 import { useRouter } from 'next/router'
 import { LoadVideos } from '../api/api'
 import FilmCardsObserver from '../hooks-utils/FilmCardsObserver'
+import { useSelector } from 'react-redux'
+import { resetFilmCardsAction, initializeStore } from '../redux/store'
 
 export default function SaerchedPage({ res }) {
-  // const filmCards = useSelector((state) => state.filmCards)
+  const result = useSelector((state) => state.filmCards)
+  const [isLoaded, setIsLoaded] = useState(true)
   const router = useRouter()
   const { opened } = router.query
-  const [result, setResult] = useState(res)
-  useEffect(() => {
-    if (result?.length) {
-      console.log('query change')
-      setResult([])
-    }
-  }, [router.query.query])
-
-  useEffect(() => {
-    setResult((result) => {
-      console.log(result, 'res change')
-      return [...result, ...res]
-    })
-  }, [router.query.p])
 
   const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
   return (
     <main className={mainclasses}>
       <FilmCardsCheck result={result} />
       {opened && <VideoLayout result={result} opened={opened} />}
-      <FilmCardsObserver
-        router={router}
-        result={result}
-        resLength={res?.length}
-      />
+      {isLoaded && result?.length ? (
+        <FilmCardsObserver resLength={res?.length} setIsLoaded={setIsLoaded} />
+      ) : null}
     </main>
   )
 }
 
 export const getServerSideProps = async ({ query }) => {
-  // const reduxStore = initializeStore()
-  // console.log(reduxStore.getState(), 'cardd')
-  // const { dispatch } = reduxStore
+  const reduxStore = initializeStore()
+  const { dispatch } = reduxStore
   const page = parseInt(query.p) || 1
   const res = await LoadVideos({ call: 1, query: query.query, page, count: 6 })
-  // dispatch(addFilmCardsAction(res.result))
+  dispatch(resetFilmCardsAction(res.result))
 
   return {
     props: {
+      initialReduxState: reduxStore.getState(),
       res: res.result,
-      // initialReduxState: reduxStore.getState(),
     },
   }
 }

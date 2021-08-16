@@ -1,16 +1,22 @@
+import { useRouter } from 'next/router'
 import { useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { LoadVideos } from '../api/api'
+import { addFilmCardsAction } from '../redux/store'
 
-export default function FilmCardObserver({ router, resLength }) {
+export default function FilmCardObserver({ resLength, setIsLoaded }) {
+  const router = useRouter()
   const observedEl = useRef(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     let options = {
       rootMargin: '0px',
       threshold: 0,
     }
-    let callback = function (entry) {
+    let callback = async (entry) => {
       if (entry[0].isIntersecting) {
-        let page = router.query.p || 1
+        let page = parseInt(router.query.p) || 1
         let paramsquery = {
           query: router.query.query,
           p: ++page,
@@ -26,8 +32,17 @@ export default function FilmCardObserver({ router, resLength }) {
             },
           },
           undefined,
-          { scroll: false }
+          { scroll: false, shallow: true }
         )
+        setIsLoaded(false)
+        const res = await LoadVideos({
+          call: 1,
+          query: router.query.query,
+          page,
+          count: 6,
+        })
+        dispatch(addFilmCardsAction(res.result))
+        setIsLoaded(true)
       }
     }
     let observer = new IntersectionObserver(callback, options)
@@ -36,6 +51,6 @@ export default function FilmCardObserver({ router, resLength }) {
       observer.disconnect()
     }
   }, [router.query])
- 
+
   return <div style={{ display: resLength < 6 && 'none' }} ref={observedEl} />
 }

@@ -42,7 +42,7 @@ export default function FilmCard({
   const isSkeleton = imageIsLoaded
     ? `${s.filmcard__img} ${skl.skeleton}`
     : s.filmcard__img
-
+  console.log({ thumbnail, ind })
   return (
     <section ref={filmCardRef}>
       <Link

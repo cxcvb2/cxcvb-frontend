@@ -11,6 +11,7 @@ const initialState = {
 
 const ADD_FILM_CARDS = 'ADD_FILM_CARDS'
 const CHANGE_KEY_CODE = 'CHANGE_KEY_CODE'
+const RESET_FILM_CARDS = 'RESET_FILM_CARDS'
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -24,6 +25,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         keyCode: action.keyCode,
+      }
+    }
+    case RESET_FILM_CARDS: {
+      return {
+        ...state,
+        filmCards: [...action.filmCards],
       }
     }
     default: {
@@ -42,6 +49,11 @@ export const addFilmCardsAction = (filmCards) => ({
   filmCards,
 })
 
+export const resetFilmCardsAction = (filmCards) => ({
+  type: RESET_FILM_CARDS,
+  filmCards,
+})
+
 function initStore(preloadedState = initialState) {
   return createStore(
     reducer,
@@ -55,7 +67,7 @@ export const initializeStore = (preloadedState) => {
   // After navigating to a page with an initial Redux state, merge that state
   // with the current state in the store, and create a new store
   if (typeof window === 'undefined') {
-      return _store
+    return _store
   }
   if (preloadedState && store) {
     _store = initStore({
