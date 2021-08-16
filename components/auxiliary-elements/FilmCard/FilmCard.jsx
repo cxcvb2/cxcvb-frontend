@@ -12,12 +12,14 @@ export default function FilmCard({
   thumbnail,
   host,
   ind,
+  videoId,
 }) {
   const { query, opened } = useRouter()
   const [imageIsLoaded, setImageIsLoaded] = useState(true)
   const [isThumbnailLoad, setisThumbnailLoad] = useState(thumbnail)
   const filmCardRef = useRef()
   const ImageWrapperRef = useRef()
+
   useEffect(() => {
     if (opened === source) {
       filmCardRef.current.scrollIntoView()
@@ -33,16 +35,15 @@ export default function FilmCard({
   const filmcardIsActive =
     query.opened === source ? `${s.filmcard} ${s.filmcard__active}` : s.filmcard
 
-  const filmCardImg =
-    isThumbnailLoad !== '/images/not-thumbnail.png'
-      ? `/api/imageproxy?url=${isThumbnailLoad}`
-      : '/images/not-thumbnail.png'
+  const filmCardImg = isThumbnailLoad
+    ? `/api/imageproxy?url=${isThumbnailLoad}`
+    : '/images/not-thumbnail.png'
 
   const page = query.p || 1
   const isSkeleton = imageIsLoaded
     ? `${s.filmcard__img} ${skl.skeleton}`
     : s.filmcard__img
-  console.log({ thumbnail, ind })
+
   return (
     <section ref={filmCardRef}>
       <Link
@@ -66,7 +67,7 @@ export default function FilmCard({
               onLoad={() => {
                 setImageIsLoaded(false)
               }}
-              key={thumbnail}
+              key={videoId}
             />
           </div>
           <div className={s.filmcard__content}>

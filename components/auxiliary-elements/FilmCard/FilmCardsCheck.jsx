@@ -40,12 +40,7 @@ export default function FilmCardsCheck({ result }) {
       ) : (
         <div className={filmCards_wrapperClasses}>
           {result.map((el, ind) => (
-            <FilmCard
-              {...el}
-              ind={ind + 10}
-              key={Math.random()}
-              opened={opened}
-            />
+            <FilmCard {...el} ind={ind + 10} key={el.videoId} opened={opened} />
           ))}
         </div>
       )}

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMvideoIddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 let store
@@ -18,7 +18,9 @@ const reducer = (state = initialState, action) => {
     case ADD_FILM_CARDS: {
       return {
         ...state,
-        filmCards: [...state.filmCards, ...action.filmCards],
+        filmCards: [...state.filmCards, ...action.filmCards].filter(
+          (v, i, a) => a.findIndex((t) => t.videoId === v.videoId) === i
+        ),
       }
     }
     case CHANGE_KEY_CODE: {
@@ -30,7 +32,9 @@ const reducer = (state = initialState, action) => {
     case RESET_FILM_CARDS: {
       return {
         ...state,
-        filmCards: [...action.filmCards],
+        filmCards: [...action.filmCards].filter(
+          (v, i, a) => a.findIndex((t) => t.videoId === v.videoId) === i
+        ),
       }
     }
     default: {
@@ -55,11 +59,7 @@ export const resetFilmCardsAction = (filmCards) => ({
 })
 
 function initStore(preloadedState = initialState) {
-  return createStore(
-    reducer,
-    preloadedState,
-    composeWithDevTools(applyMiddleware())
-  )
+  return createStore(reducer, preloadedState)
 }
 
 export const initializeStore = (preloadedState) => {
