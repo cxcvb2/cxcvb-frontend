@@ -18,7 +18,8 @@
     "react-intl": "^5.20.6",
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "url-encode-decode": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "7.31.0",

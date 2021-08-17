@@ -1,16 +1,19 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import s from './SearchInputRecDropdown.module.css'
+import { encode } from 'url-encode-decode'
+
 export default function SearchInputRecDropdown({
   searchInputRec,
   setSearchInputVal,
   setIsSearchInputRecOpened,
   searchInputWrapper,
 }) {
-  const { push } = useRouter()
+  const router = useRouter()
   const handleOnClick = (e) => {
     setSearchInputVal(e.target.innerText)
-    push(`/${e.target.innerText}?p=1`)
+    const query = encode(e.target.innerText)
+    router.push(`/${query}?p=1`)
     setIsSearchInputRecOpened(false)
   }
   useEffect(() => {
@@ -26,7 +29,6 @@ export default function SearchInputRecDropdown({
         // Go up the DOM
         targetElement = targetElement.parentNode
       } while (targetElement)
-
       // This is a click outside.
       setIsSearchInputRecOpened(false)
     }

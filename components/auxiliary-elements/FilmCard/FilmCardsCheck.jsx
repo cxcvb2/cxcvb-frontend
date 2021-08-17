@@ -3,6 +3,7 @@ import FilmCard from './FilmCard.jsx'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { decode } from 'url-encode-decode'
 
 export default function FilmCardsCheck({ result }) {
   const keyCode = useSelector((state) => state.keyCode)
@@ -36,7 +37,7 @@ export default function FilmCardsCheck({ result }) {
   return (
     <>
       {!result?.length ? (
-        <h1>There are no video in this query - {router.query.query}</h1>
+        <h1>There are no video in this query - {decode(router.query.query)}</h1>
       ) : (
         <div className={filmCards_wrapperClasses}>
           {result.map((el, ind) => (

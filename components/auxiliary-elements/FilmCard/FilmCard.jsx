@@ -14,17 +14,17 @@ export default function FilmCard({
   ind,
   videoId,
 }) {
-  const { query, opened } = useRouter()
+  const { query } = useRouter()
   const [imageIsLoaded, setImageIsLoaded] = useState(true)
   const [isThumbnailLoad, setisThumbnailLoad] = useState(thumbnail)
   const filmCardRef = useRef()
   const ImageWrapperRef = useRef()
 
   useEffect(() => {
-    if (opened === source) {
+    if (query.opened === source) {
       filmCardRef.current.scrollIntoView()
     }
-  }, [opened])
+  }, [query.opened])
 
   useEffect(() => {
     if (!ImageWrapperRef.current?.firstChild?.firstChild?.complete) {

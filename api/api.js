@@ -1,4 +1,5 @@
 import * as axios from 'axios'
+import { decode } from 'url-encode-decode'
 
 export const instance = axios.create({
   baseURL: process.env.apiURL,
@@ -8,7 +9,7 @@ export const LoadVideos = async ({ call, query, page, count }) => {
   return await instance
     .post('/api', {
       call,
-      'videos.1/search': { query, page, count },
+      'videos.1/search': { query: decode(query), page, count },
     })
     .then((response) => {
       return response.data

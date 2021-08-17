@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useState, useRef } from 'react'
 import { LoadInputCompleteRec } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
-
+import { encode } from 'url-encode-decode'
 export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
@@ -31,7 +31,8 @@ export default function SearchInput({ inputRef }) {
     e.preventDefault()
     setIsSearchInputRecOpened(false)
     if (searchInputVal.trim().length && query !== searchInputVal) {
-      router.push(`/${searchInputVal}?p=1`)
+      const query = encode(searchInputVal)
+      router.push(`/${query}?p=1`)
     }
   }
   s
