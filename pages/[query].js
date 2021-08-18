@@ -8,9 +8,12 @@ import FilmCardsObserver from '../hooks-utils/FilmCardsObserver'
 import { useSelector } from 'react-redux'
 import { resetFilmCardsAction, initializeStore } from '../redux/store'
 
-export default function SaerchedPage({ res }) {
+export default function SaerchedPage({ resLength }) {
   const result = useSelector((state) => state.filmCards)
   const [isLoaded, setIsLoaded] = useState(true)
+  const [isFilmCardsObserved, setIsFilmCardsObserved] = useState(
+    resLength || true
+  )
   const router = useRouter()
   const { opened } = router.query
 
@@ -19,8 +22,12 @@ export default function SaerchedPage({ res }) {
     <main className={mainclasses}>
       <FilmCardsCheck result={result} />
       {opened && <VideoLayout result={result} opened={opened} />}
-      {isLoaded && result?.length ? (
-        <FilmCardsObserver resLength={res?.length} setIsLoaded={setIsLoaded} />
+      {isLoaded && resLength && isFilmCardsObserved ? (
+        <FilmCardsObserver
+          resLength={resLength}
+          setIsLoaded={setIsLoaded}
+          setIsFilmCardsObserved={setIsFilmCardsObserved}
+        />
       ) : null}
     </main>
   )
@@ -42,8 +49,8 @@ export const getServerSideProps = async ({ query }) => {
   return {
     props: {
       ...isRedirect,
+      resLength: res.result?.length,
       initialReduxState: reduxStore.getState(),
-      res: res.result,
     },
   }
 }

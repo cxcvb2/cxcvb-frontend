@@ -21,6 +21,9 @@
 .searchInputRec_el:hover {
   background-color: #252255;
 }
+.searchInputRec_el_active {
+  background-color: #252255;
+}
 @media (max-width: 800px) {
   .searchInputRec_el {
     font-size: 16px;

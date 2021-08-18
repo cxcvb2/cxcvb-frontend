@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux'
 import { LoadVideos } from '../api/api'
 import { addFilmCardsAction } from '../redux/store'
 
-export default function FilmCardObserver({ resLength, setIsLoaded }) {
+export default function FilmCardObserver({
+  resLength,
+  setIsLoaded,
+  setIsFilmCardsObserved,
+}) {
   const router = useRouter()
   const observedEl = useRef(null)
   const dispatch = useDispatch()

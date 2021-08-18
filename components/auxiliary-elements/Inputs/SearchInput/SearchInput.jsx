@@ -5,12 +5,12 @@ import { useRouter } from 'next/router'
 import { useState, useRef } from 'react'
 import { LoadInputCompleteRec } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
-import { encode } from 'url-encode-decode'
+import { decode, encode } from 'url-encode-decode'
 export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInputVal, setSearchInputVal] = useState(query || '')
+  const [searchInputVal, setSearchInputVal] = useState(decode(query) || '')
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
@@ -26,17 +26,20 @@ export default function SearchInput({ inputRef }) {
       }
     }
   }
-
+  console.log({ isSearchInputRecOpened })
   const handleSearchSubmit = (e) => {
+    console.log('submit')
     e.preventDefault()
+    inputRef.current.blur()
     setIsSearchInputRecOpened(false)
     if (searchInputVal.trim().length && query !== searchInputVal) {
       const query = encode(searchInputVal)
-      router.push(`/${query}?p=1`)
+      router.push(`/${query}`)
     }
   }
-  s
+
   const handleSearchonChange = (e) => {
+    console.log('change', e.target.value)
     e.target.value === '' && setIsSearchInputRecOpened(false)
     setSearchInputVal(e.target.value)
     loadRecomendation(e.target.value)

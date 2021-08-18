@@ -6,15 +6,12 @@ export const instance = axios.create({
 })
 
 export const LoadVideos = async ({ call, query, page, count }) => {
-  console.log({ call, query, page, count })
-
   return await instance
     .post('/api', {
       call,
       'videos.1/search': { query: decode(query), page, count },
     })
     .then((response) => {
-      console.log(response.data)
       return response.data
     })
     .catch((e) => {
@@ -36,6 +33,6 @@ export const LoadInputCompleteRec = async ({ query, call }) => {
     .catch((e) => {
       console.log(e)
       //when we crate 404 page its will redirect there
-      return { result: [] }
+      return { result: null }
     })
 }
