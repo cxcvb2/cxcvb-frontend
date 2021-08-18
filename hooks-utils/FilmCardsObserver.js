@@ -38,6 +38,7 @@ export default function FilmCardObserver({
           undefined,
           { scroll: false, shallow: true }
         )
+
         setIsLoaded(false)
         const res = await LoadVideos({
           call: 1,
@@ -45,6 +46,20 @@ export default function FilmCardObserver({
           page,
           count: 6,
         })
+        if (!res.result.length) {
+          setIsFilmCardsObserved(false)
+          router.push(
+            {
+              pathname: '/[query]',
+              query: {
+                ...paramsquery,
+                p: page - 1,
+              },
+            },
+            undefined,
+            { scroll: false, shallow: true }
+          )
+        }
         dispatch(addFilmCardsAction(res.result))
         setIsLoaded(true)
       }
