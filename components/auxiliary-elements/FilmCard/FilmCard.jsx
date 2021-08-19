@@ -8,7 +8,7 @@ import skl from '../../../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css
 export default function FilmCard({
   title,
   description,
-  source,
+  withquery,
   thumbnail,
   host,
   ind,
@@ -21,7 +21,7 @@ export default function FilmCard({
   const ImageWrapperRef = useRef()
 
   useEffect(() => {
-    if (query.opened === source) {
+    if (query.opened === videoId) {
       filmCardRef.current.scrollIntoView()
     }
   }, [query.opened])
@@ -33,7 +33,9 @@ export default function FilmCard({
   }, [imageIsLoaded])
 
   const filmcardIsActive =
-    query.opened === source ? `${s.filmcard} ${s.filmcard__active}` : s.filmcard
+    query.opened === videoId
+      ? `${s.filmcard} ${s.filmcard__active}`
+      : s.filmcard
 
   const filmCardImg = isThumbnailLoad
     ? `/api/imageproxy?url=${isThumbnailLoad}`
@@ -43,14 +45,14 @@ export default function FilmCard({
   const isSkeleton = imageIsLoaded
     ? `${s.filmcard__img} ${skl.skeleton}`
     : s.filmcard__img
+ 
+  const hrefQuery = withquery
+    ? `/${query.query}}?p=${page}&opened=${videoId}`
+    : `/?p=${page}&opened=${videoId}`
 
   return (
     <section ref={filmCardRef}>
-      <Link
-        href={`/${query.query}?p=${page}&opened=${source}`}
-        scroll={false}
-        shallow
-      >
+      <Link href={hrefQuery} scroll={false} shallow>
         <a className={filmcardIsActive}>
           <div className={isSkeleton} ref={ImageWrapperRef}>
             <Image

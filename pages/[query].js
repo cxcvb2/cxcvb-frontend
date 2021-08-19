@@ -17,11 +17,14 @@ export default function SaerchedPage({ resLength }) {
   const router = useRouter()
   const { opened } = router.query
 
-  const mainclasses = opened ? `${s.main_two_columns} ${s.main}` : s.main
+  const mainclasses =
+    opened && result.length ? `${s.main_two_columns} ${s.main}` : s.main
   return (
     <main className={mainclasses}>
-      <FilmCardsCheck result={result} />
-      {opened && <VideoLayout result={result} opened={opened} />}
+      <FilmCardsCheck withquery result={result} />
+      {opened && result.length ? (
+        <VideoLayout withquery result={result} opened={opened} />
+      ) : null}
       {isLoaded && resLength && isFilmCardsObserved ? (
         <FilmCardsObserver
           resLength={resLength}

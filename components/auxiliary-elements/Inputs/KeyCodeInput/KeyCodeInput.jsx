@@ -23,11 +23,16 @@ export default function KeyCodeInput({ inputRef }) {
           setIsKeyInputOpened(true)
           keyInputRef.current.focus()
         } else if (48 === parseInt(e.keyCode)) {
-          setTimeout(() => {
-            //on focus to input value appends 0: stop for don't appending
-            inputRef.current.focus()
-          }, 1)
-          dispatch(changeKeyCodeAction(0))
+          if (document.activeElement === inputRef.current) {
+            inputRef.current.blur()
+            dispatch(changeKeyCodeAction(null))
+          } else {
+            setTimeout(() => {
+              //on focus to input value appends 0: stop for don't appending
+              inputRef.current.focus()
+            }, 1)
+            dispatch(changeKeyCodeAction(0))
+          }
         }
       }
     }

@@ -36,3 +36,35 @@ export const LoadInputCompleteRec = async ({ query, call }) => {
       return { result: null }
     })
 }
+
+export const LoadVideoById = async ({ call, videoId }) => {
+  return await instance
+    .post('/api', {
+      call,
+      'videos/getById': { videoId },
+    })
+    .then((response) => {
+      return response.data
+    })
+    .catch((e) => {
+      console.log(e)
+      //when we crate 404 page its will redirect there
+      return { result: null }
+    })
+}
+
+export const LoadTopVideos = async ({ call }) => {
+  return await instance
+    .post('/api', {
+      call,
+      'videos/top': { call },
+    })
+    .then((response) => {
+      return response.data
+    })
+    .catch((e) => {
+      console.log(e)
+      //when we crate 404 page its will redirect there
+      return { result: null }
+    })
+}
