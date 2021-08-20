@@ -26,20 +26,20 @@ export default function SearchInput({ inputRef }) {
       }
     }
   }
-  console.log({ isSearchInputRecOpened })
   const handleSearchSubmit = (e) => {
-    console.log('submit')
     e.preventDefault()
     inputRef.current.blur()
     setIsSearchInputRecOpened(false)
     if (searchInputVal.trim().length && query !== searchInputVal) {
-      const query = encode(searchInputVal)
-      router.push(`/${query}`)
+      const opened = router.query.opened
+      const query = opened
+        ? `/${encode(searchInputVal)}?opened=${opened}`
+        : `/${encode(searchInputVal)}`
+      router.push(query)
     }
   }
 
   const handleSearchonChange = (e) => {
-    console.log('change', e.target.value)
     e.target.value === '' && setIsSearchInputRecOpened(false)
     setSearchInputVal(e.target.value)
     loadRecomendation(e.target.value)

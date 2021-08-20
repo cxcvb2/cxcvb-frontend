@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import s from './SearchInputRecDropdown.module.css'
 import { encode } from 'url-encode-decode'
 
@@ -12,17 +12,22 @@ export default function SearchInputRecDropdown({
   const router = useRouter()
   const [chosenRec, setChosenRec] = useState(-1)
   const searchInputRecLength = searchInputRec?.length
-  const searchByRec = (rec) => {
-    setIsSearchInputRecOpened(() => false)
-    setSearchInputVal(rec)
-    const query = encode(rec)
-    router.push(`/${query}?p=1`)
-  }
+  const searchByRec = useCallback(
+    (rec) => {
+      setIsSearchInputRecOpened(() => false)
+      setSearchInputVal(rec)
+      const opened = router.query.opened
+      const query = opened
+        ? `/${encode(rec)}&opened=${opened}`
+        : `/${encode(rec)}`
+      router.push(query)
+    },
+    [router, setIsSearchInputRecOpened, setSearchInputVal]
+  )
 
   const handleOnClick = (e) => {
     searchByRec(e.target.innerText)
   }
-  console.log(searchInputRec)
 
   useEffect(() => {
     const chooseRecOnkeyDown = (e) => {
@@ -57,7 +62,14 @@ export default function SearchInputRecDropdown({
       document.removeEventListener('keydown', chooseRecOnkeyDown)
       document.removeEventListener('click', clickOutSideListener)
     }
-  }, [searchInputRec, chosenRec])
+  }, [
+    searchInputRec,
+    chosenRec,
+    searchByRec,
+    searchInputRecLength,
+    searchInputWrapper,
+    setIsSearchInputRecOpened,
+  ])
 
   return (
     <ul className={s.searchInputRec_wrapper}>

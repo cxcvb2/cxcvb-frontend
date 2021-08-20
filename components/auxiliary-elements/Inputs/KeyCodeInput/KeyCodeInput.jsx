@@ -23,16 +23,11 @@ export default function KeyCodeInput({ inputRef }) {
           setIsKeyInputOpened(true)
           keyInputRef.current.focus()
         } else if (48 === parseInt(e.keyCode)) {
-          if (document.activeElement === inputRef.current) {
-            inputRef.current.blur()
-            dispatch(changeKeyCodeAction(null))
-          } else {
-            setTimeout(() => {
-              //on focus to input value appends 0: stop for don't appending
-              inputRef.current.focus()
-            }, 1)
-            dispatch(changeKeyCodeAction(0))
-          }
+          setTimeout(() => {
+            //on focus to input value appends 0: stop for don't appending
+            inputRef.current.focus()
+          }, 1)
+          dispatch(changeKeyCodeAction(0))
         }
       }
     }
@@ -40,12 +35,13 @@ export default function KeyCodeInput({ inputRef }) {
     return () => {
       document.removeEventListener('keydown', onKeydown)
     }
-  }, [inputRef, changeKeyCodeAction, setIsKeyInputOpened])
+  }, [inputRef, setIsKeyInputOpened,dispatch])
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
 
     if (value) {
+      console.log({ value })
       NavigateOnKeyCodeChange({ keyCode: value, router })
       dispatch(changeKeyCodeAction(value))
     }

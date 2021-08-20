@@ -40,12 +40,12 @@ export default function FilmCardsCheck({ withquery = false, result }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [keyCode, result])
+  }, [keyCode, result, router, withquery])
 
   const filmCards_wrapperClasses = opened
     ? `${s.filmCards_wrapper_mb} ${s.filmCards_wrapper} `
     : s.filmCards_wrapper
-  console.log({ withquery })
+
   return (
     <>
       {!result?.length ? (

@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import { LoadTopVideos } from '../api/api'
 import FilmCardsCheck from '../components/auxiliary-elements/FilmCard/FilmCardsCheck'
 import VideoLayout from '../components/auxiliary-elements/VideoLayout/VideoLayout'
-import s from '../styles/Home.module.css'
+import s from '../styles/TopVideosPage.module.css'
 // import { useIntl } from '../hooks-utils/useIntl'
 
 export default function TopVideos({ topVideos }) {

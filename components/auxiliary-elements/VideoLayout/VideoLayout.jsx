@@ -21,20 +21,22 @@ export default function VideoLayout({ withquery = false, opened, result }) {
     })
   }
 
-  useEffect(async () => {
-    const isVideoInResult = result.find((video) => {
-      if (opened === video?.videoId) {
-        setCurrentVideo(video)
-        return true
-      }
-    })
+  useEffect(() => {
+    async function fetchData() {
+      const isVideoInResult = result.find((video) => {
+        if (opened === video?.videoId) {
+          setCurrentVideo(video)
+          return true
+        }
+      })
 
-    if (!isVideoInResult) {
-      const res = await LoadVideoById({ call: 1, videoId: opened })
-      setCurrentVideo(res.result)
+      if (!isVideoInResult) {
+        const res = await LoadVideoById({ call: 1, videoId: opened })
+        setCurrentVideo(res.result)
+      }
     }
-  }, [opened])
-  console.log(currentVideo)
+    fetchData()
+  }, [opened, result])
   return (
     <div className={s.videoLayout_wrapper}>
       <section className={s.videoLayout}>

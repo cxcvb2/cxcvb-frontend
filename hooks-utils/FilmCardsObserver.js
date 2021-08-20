@@ -27,6 +27,7 @@ export default function FilmCardObserver({
         }
         let opened = router.query.opened
         opened && (paramsquery = { ...paramsquery, opened })
+        console.log(paramsquery)
 
         router.push(
           {

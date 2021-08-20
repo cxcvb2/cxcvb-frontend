@@ -1,7 +1,7 @@
 import s from './Navigation.module.css'
 import IsNavItemActive from './IsNavItemActive'
 
-const navItems = ['dashboard', 'films', 'serials', 'onlinetv']
+export const navItems = ['dashboard', 'films', 'serials', 'onlinetv']
 
 export default function Navigation() {
   return (

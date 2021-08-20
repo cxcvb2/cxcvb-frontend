@@ -24,7 +24,7 @@ export default function FilmCard({
     if (query.opened === videoId) {
       filmCardRef.current.scrollIntoView()
     }
-  }, [query.opened])
+  }, [query.opened, videoId])
 
   useEffect(() => {
     if (!ImageWrapperRef.current?.firstChild?.firstChild?.complete) {
@@ -45,9 +45,9 @@ export default function FilmCard({
   const isSkeleton = imageIsLoaded
     ? `${s.filmcard__img} ${skl.skeleton}`
     : s.filmcard__img
- 
+
   const hrefQuery = withquery
-    ? `/${query.query}}?p=${page}&opened=${videoId}`
+    ? `/${query.query}?p=${page}&opened=${videoId}`
     : `/?p=${page}&opened=${videoId}`
 
   return (

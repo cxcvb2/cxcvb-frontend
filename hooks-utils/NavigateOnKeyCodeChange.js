@@ -1,21 +1,7 @@
-export default function NavigateOnKeyCodeChange({ keyCode, router }) {
+import { navItems } from '../components/Navigation/Navigation'
 
-  switch (keyCode) {
-    case 1: {
-      router.push('/dashboard')
-      return
-    }
-    case 2: {
-      router.push('/films')
-      return
-    }
-    case 3: {
-      router.push('/serials')
-      return
-    }
-    case 4: {
-      router.push('/onlinetv')
-      return
-    }
+export default function NavigateOnKeyCodeChange({ keyCode, router }) {
+  if (navItems[keyCode - 1]) {
+    router.push(`/${navItems[keyCode - 1]}`)
   }
 }
