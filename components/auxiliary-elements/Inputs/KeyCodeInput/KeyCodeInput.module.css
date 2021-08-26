@@ -1,0 +1,23 @@
+.KeyCodeInput_wrapper {
+  max-width: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  padding-left: 20px;
+  padding-bottom: 14px;
+  border-left: 2px solid #6666af;
+  z-index: 1;
+  background-color: #201d48;
+}
+.KeyCodeInput_Hidden {
+  display: none;
+}
+.KeyCodeInput {
+  font-size: 23px;
+  padding: 10px;
+  width: 350px;
+  height: 40px;
+  background-color: #2e2867;
+  color: white;
+}

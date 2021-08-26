@@ -1,28 +1,12 @@
 import s from './header.module.css'
-import SearchInput from '../auxiliary-elements/SearchInput/SearchInput'
+import SearchInput from '../auxiliary-elements/Inputs/SearchInput/SearchInput'
 import Link from 'next/link'
 import Navigation from '../Navigation/Navigation'
-import { useState, useRef, useEffect } from 'react'
-export default function Header() {
-  const [keyCode, setkeyCode] = useState(null)
-  const inputRef = useRef()
+import { useSelector } from 'react-redux'
 
-  useEffect(() => {
-    const onKeykeydown = (e) => {
-      // when state is 0 and user lose focus of input and press again 0 component doesnt rerender, for that setCayCode(null) to rerender
-      if (Number(e.keyCode) === 48) {
-        setkeyCode(null)
-      }
+export default function Header({ inputRef }) {
+  const keyCode = useSelector((state) => state.keyCode)
 
-      if (document.activeElement.id !== inputRef.current.id) {
-        setkeyCode(e.keyCode)
-      }
-    }
-    document.addEventListener('keydown', onKeykeydown)
-    return () => {
-      document.removeEventListener('keydown', onKeykeydown)
-    }
-  }, [])
   return (
     <header>
       <div className={s.header}>
@@ -31,7 +15,7 @@ export default function Header() {
             <h1 className={s.header__title}>cxcvb</h1>
           </a>
         </Link>
-        <SearchInput keyCode={keyCode} inputRef={inputRef} />
+        <SearchInput inputRef={inputRef} />
       </div>
       <Navigation keyCode={keyCode} />
     </header>
