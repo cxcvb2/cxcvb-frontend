@@ -2,6 +2,7 @@ import s from '../styles/DashboardPage.module.css'
 import Link from 'next/link'
 import Transparentbtn from '../components/auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 import { useIntl } from '../hooks-utils/useIntl'
+import ShareUrl from '../components/ShareUrl/ShareUrl'
 
 export default function DashboardPage() {
   const { f } = useIntl()
@@ -21,6 +22,10 @@ export default function DashboardPage() {
         >
           <Transparentbtn>{f('speedtest')}</Transparentbtn>
         </a>
+
+        <div className={s.speedtestbtn}>
+          <ShareUrl />
+        </div>
       </div>
     </main>
   )

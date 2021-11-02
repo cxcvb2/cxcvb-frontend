@@ -6,10 +6,12 @@ import { useRouter } from 'next/router'
 import { LoadVideos } from '../api/api'
 import FilmCardsObserver from '../hooks-utils/FilmCardsObserver'
 import { useSelector } from 'react-redux'
-import { resetFilmCardsAction, initializeStore } from '../redux/store'
+import { initializeStore } from '../redux/store'
+import { resetFilmCardsAction } from '../redux/filmCardsReducer'
 
 export default function SaerchedPage({ resLength }) {
-  const result = useSelector((state) => state.filmCards)
+  const result = useSelector((state) => state.filmCardsPage.filmCards)
+
   const [isLoaded, setIsLoaded] = useState(true)
   const [isFilmCardsObserved, setIsFilmCardsObserved] = useState(
     resLength || true

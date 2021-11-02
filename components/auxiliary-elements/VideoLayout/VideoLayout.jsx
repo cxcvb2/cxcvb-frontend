@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { LoadVideoById } from '../../../api/api'
-import { changeKeyCodeAction } from '../../../redux/store'
+import { changeKeyCodeAction } from '../../../redux/filmCardsReducer'
 import CurrentVideoCheck from './CurrentVideoCheck'
 import s from './VideoLayout.module.css'
 

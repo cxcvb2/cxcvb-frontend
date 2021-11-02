@@ -19,13 +19,10 @@ export default function SearchInput({ inputRef }) {
     if (value.trim().length && query !== value) {
       const { result } = await LoadInputCompleteRec({ call: 1, query: value })
       setSearchInputRec(result)
-      if (result?.length) {
-        setIsSearchInputRecOpened(true)
-      } else {
-        setIsSearchInputRecOpened(false)
-      }
+      setIsSearchInputRecOpened(result?.length || false)
     }
   }
+
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     inputRef.current.blur()

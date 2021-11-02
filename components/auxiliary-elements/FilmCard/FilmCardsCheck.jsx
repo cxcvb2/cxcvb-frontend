@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { decode } from 'url-encode-decode'
 
 export default function FilmCardsCheck({ withquery = false, result }) {
-  const keyCode = useSelector((state) => state.keyCode)
+  const keyCode = useSelector((state) => state.filmCardsPage.keyCode)
   const router = useRouter()
   const { opened } = router.query
 
@@ -40,7 +40,7 @@ export default function FilmCardsCheck({ withquery = false, result }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [keyCode, result, withquery])
+  }, [keyCode, result, withquery, router])
 
   const filmCards_wrapperClasses = opened
     ? `${s.filmCards_wrapper_mb} ${s.filmCards_wrapper} `

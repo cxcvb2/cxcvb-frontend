@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { LoadVideos } from '../api/api'
-import { addFilmCardsAction } from '../redux/store'
+import { addFilmCardsAction } from '../redux/filmCardsReducer'
 
 export default function FilmCardObserver({
   resLength,
@@ -27,7 +27,6 @@ export default function FilmCardObserver({
         }
         let opened = router.query.opened
         opened && (paramsquery = { ...paramsquery, opened })
-        console.log(paramsquery)
 
         router.push(
           {
@@ -70,7 +69,7 @@ export default function FilmCardObserver({
     return () => {
       observer.disconnect()
     }
-  }, [router.query])
+  }, [dispatch, router, router.query, setIsFilmCardsObserved, setIsLoaded])
 
   return <div style={{ display: resLength < 6 && 'none' }} ref={observedEl} />
 }
