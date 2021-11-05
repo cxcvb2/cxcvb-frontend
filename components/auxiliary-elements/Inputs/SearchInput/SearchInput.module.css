@@ -1,21 +1,17 @@
 .search_input_rec {
   width: 70%;
-  margin-left: auto;
   position: relative;
-  border-bottom: 3px solid #201d48;
 }
 .search_wrapper {
   display: flex;
   align-items: center;
   padding: 13px 17px 13px;
   width: 100%;
-
   border-radius: 25px;
 }
 
 .search_wrapper__opened_rec {
   border-bottom-left-radius: 0;
-
   border-bottom-right-radius: 0;
 }
 .searchIcon__wrapper {

@@ -1,0 +1,29 @@
+.main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.video_wrapper,
+.video {
+  width: 100%;
+  height: 60vw;
+  max-height: 100vh;
+}
+.searchInput_wrapper {
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+.openFullVersion {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 25px 20px 25px 0;
+}
+.openFullVersion a {
+  font-size: 25px;
+}

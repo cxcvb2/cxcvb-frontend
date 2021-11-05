@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import { useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { LoadVideos } from '../api/api'
+import { decode } from 'url-encode-decode'
+import { apiCall } from '../api/api'
 import { addFilmCardsAction } from '../redux/filmCardsReducer'
 
 export default function FilmCardObserver({
@@ -40,13 +41,18 @@ export default function FilmCardObserver({
         )
 
         setIsLoaded(false)
-        const res = await LoadVideos({
+        console.log({
           call: 1,
           query: router.query.query,
           page,
           count: 6,
         })
-        if (!res.result.length) {
+        const res = await apiCall('videos.1/search', {
+          query: decode(router.query.query),
+          page,
+          count: 6,
+        })
+        if (!res?.result?.length) {
           setIsFilmCardsObserved(false)
           router.push(
             {
@@ -60,7 +66,8 @@ export default function FilmCardObserver({
             { scroll: false, shallow: true }
           )
         }
-        dispatch(addFilmCardsAction(res.result))
+        console.log(res, 'ress')
+        dispatch(addFilmCardsAction(res.result || []))
         setIsLoaded(true)
       }
     }

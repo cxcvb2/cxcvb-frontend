@@ -3,7 +3,7 @@ import s from './SearchInput.module.css'
 import { useIntl } from '../../../../hooks-utils/useIntl'
 import { useRouter } from 'next/router'
 import { useState, useRef } from 'react'
-import { LoadInputCompleteRec } from '../../../../api/api'
+import { apiCall } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
 import { decode, encode } from 'url-encode-decode'
 export default function SearchInput({ inputRef }) {
@@ -17,7 +17,9 @@ export default function SearchInput({ inputRef }) {
 
   const loadRecomendation = async (value) => {
     if (value.trim().length && query !== value) {
-      const { result } = await LoadInputCompleteRec({ call: 1, query: value })
+      const { result } = await apiCall('videos/predict', {
+        query: value,
+      })
       setSearchInputRec(result)
       setIsSearchInputRecOpened(result?.length || false)
     }
@@ -81,7 +83,7 @@ export default function SearchInput({ inputRef }) {
           />
         ) : null}
       </form>
-      {searchInputRec.length && isSearchInputRecOpened ? (
+      {searchInputRec?.length && isSearchInputRecOpened ? (
         <SearchInputRecDropdown
           searchInputRec={searchInputRec}
           isSearchInputRecOpened={isSearchInputRecOpened}

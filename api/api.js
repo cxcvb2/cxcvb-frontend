@@ -1,15 +1,14 @@
 import * as axios from 'axios'
-import { decode } from 'url-encode-decode'
 
 export const instance = axios.create({
-  baseURL: process.env.apiURL,
+  baseURL: 'http://92.63.106.41:8001',
 })
 
-export const LoadVideos = async ({ call, query, page, count }) => {
+export const apiCall = async (url, args) => {
   return await instance
     .post('/api', {
-      call,
-      'videos.1/search': { query: decode(query), page, count },
+      call: 1,
+      [url]: args,
     })
     .then((response) => {
       return response.data
@@ -17,54 +16,6 @@ export const LoadVideos = async ({ call, query, page, count }) => {
     .catch((e) => {
       console.log(e)
       //when we crate 404 page its will redirect there
-      return { result: null }
-    })
-}
-
-export const LoadInputCompleteRec = async ({ query, call }) => {
-  return await instance
-    .post('/api', {
-      call,
-      'videos/predict': { query },
-    })
-    .then((response) => {
-      return response.data
-    })
-    .catch((e) => {
-      console.log(e)
-      //when we crate 404 page its will redirect there
-      return { result: null }
-    })
-}
-
-export const LoadVideoById = async ({ call, videoId }) => {
-  return await instance
-    .post('/api', {
-      call,
-      'videos/getById': { videoId },
-    })
-    .then((response) => {
-      return response.data
-    })
-    .catch((e) => {
-      console.log(e)
-      //when we crate 404 page its will redirect there
-      return { result: null }
-    })
-}
-
-export const LoadTopVideos = async ({ call }) => {
-  return await instance
-    .post('/api', {
-      call,
-      'videos/top': { call },
-    })
-    .then((response) => {
-      return response.data
-    })
-    .catch((e) => {
-      console.log(e)
-      //when we crate 404 page its will redirect there
-      return { result: null }
+      return { result: [] }
     })
 }

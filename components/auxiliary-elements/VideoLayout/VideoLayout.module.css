@@ -57,8 +57,8 @@
   color: #c5c5ff;
 }
 .videoLayout__host__wrapper {
-  display: grid;
-  grid-template-columns: 1fr min-content;
+  display: flex;
+  justify-content: space-between;
   margin-top: 1rem;
   column-gap: 5px;
 }

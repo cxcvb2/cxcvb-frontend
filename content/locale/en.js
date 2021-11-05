@@ -1,13 +1,17 @@
 const endefault = {
+  //header
   search: 'Search',
   dashboard: 'dashboard',
   films: 'films',
   serials: 'serials',
   onlinetv: 'online TV',
+  kids: 'kids',
+  //footer
   contacts: 'contacts',
   phonenumber: 'phone numbers',
   siterules: `site's rules`,
   termsofuse: 'terms of use',
+  share: 'Share',
 }
 
 export const en = {
@@ -20,6 +24,9 @@ export const en = {
     ...endefault,
   },
   '/': {
+    ...endefault,
+  },
+  '/kids': {
     ...endefault,
   },
 }

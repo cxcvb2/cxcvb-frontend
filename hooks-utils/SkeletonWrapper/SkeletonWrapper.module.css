@@ -5,7 +5,6 @@
   overflow: hidden;
 }
 
-.skeleton_layout::after,
 .skeleton:after {
   content: '';
   top: 0;

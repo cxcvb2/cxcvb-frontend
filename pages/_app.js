@@ -1,17 +1,32 @@
 import '../styles/globals.css'
-import React from 'react'
+import React, { useEffect } from 'react'
 import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import useLang from '../content/locale'
-import MainLayout from '../components/Layout/MainLayout'
 import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import { useStore } from '../redux/store'
+import HeadLoayout from '../components/Layout/HeadLoayout'
+import DeviceDetector from 'device-detector-js'
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
   const router = useRouter()
   const { messages, locale, defaultLocale } = useLang(router)
+  useEffect(() => {
+    ;(async () => {
+      if (window) {
+        const { MetacomCreate } = await import('../hooks-utils/useMetacom')
+        MetacomCreate()
+        const { MetacomListenShareUrl } = await import(
+          '../hooks-utils/useMetacom'
+        )
+        MetacomListenShareUrl('hi')
+        const { MetacomGetDevices } = await import('../hooks-utils/useMetacom')
+        MetacomGetDevices()
+      }
+    })()
+  }, [])
   return (
     <Provider store={store}>
       <IntlProvider
@@ -19,15 +34,19 @@ function MyApp({ Component, pageProps }) {
         defaultLocale={defaultLocale}
         messages={messages}
       >
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <HeadLoayout />
+        <Component {...pageProps} />
       </IntlProvider>
     </Provider>
   )
 }
 
 MyApp.getInitialProps = async (appContext) => {
+  const userAgent = appContext.ctx.req.headers['user-agent']
+  console.log(userAgent)
+  const deviceDetector = new DeviceDetector()
+  const { device, os } = deviceDetector.parse(userAgent)
+
   const appProps = await App.getInitialProps(appContext)
   if (appContext.ctx?.req?.headers['accept-language']) {
     const locales = appContext.router.locales

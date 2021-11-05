@@ -1,6 +1,5 @@
 import s from './ShareUrlModal.module.css'
 import { forwardRef, useEffect, useState } from 'react'
-import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 import { useRouter } from 'next/router'
 
 const ShareUrlModal = forwardRef(function Modal(
@@ -8,20 +7,23 @@ const ShareUrlModal = forwardRef(function Modal(
   ref
 ) {
   const { asPath, basePath } = useRouter()
-  const [devices, setDevices] = useState([])
+  const [devices, setDevices] = useState([
+    { id: 1, deviceName: 'iphone' },
+    { id: 2, deviceName: 'xiaomi' },
+  ])
   const handleOnClick = () => {
-    setIsComponentVisible(false)
+    setIsComponentVisible((prev) => !prev)
   }
   useEffect(() => {
-    ;(async () => {
-      const { MetacomListenShareUrl, MetacomGetDevices, metacom } =
-        await import('../../hooks-utils/useMetacom')
-      console.log(metacom, 'meta')
-      if (metacom) {
-        await MetacomListenShareUrl()
-        setDevices(await MetacomGetDevices())
-      }
-    })()
+    // ;(async () => {
+    //   const { MetacomListenShareUrl, MetacomGetDevices, metacom } =
+    //     await import('../../hooks-utils/useMetacom')
+    //   console.log(metacom, 'meta')
+    //   if (metacom) {
+    //     await MetacomListenShareUrl()
+    //     setDevices(await MetacomGetDevices())
+    //   }
+    // })()
   }, [])
   console.log(devices)
   return (
@@ -35,20 +37,21 @@ const ShareUrlModal = forwardRef(function Modal(
             {withoutInput || (
               <input
                 type="text"
-                placeholder="sended url"
+                placeholder="another url you want to send"
                 className={s.modal_input}
               />
             )}
             <ul className={s.devices_wrapper}>
               {devices.map((device) => (
-                <li className={s.device} key={device.id}>
+                <li
+                  className={s.device}
+                  onClick={handleOnClick}
+                  key={device.id}
+                >
                   {device.deviceName}
                 </li>
               ))}
             </ul>
-            <div className={s.modal_sendBtn}>
-              <Transparentbtn isSmall>Send</Transparentbtn>
-            </div>
           </div>
         </div>
       )}

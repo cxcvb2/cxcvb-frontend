@@ -11,5 +11,6 @@ export const tr = {
     phonenumber: 'phone numbers',
     siterules: `site's rules`,
     termsofuse: 'terms of use',
+    share: 'Share',
   },
 }

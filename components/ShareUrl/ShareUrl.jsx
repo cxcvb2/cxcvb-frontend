@@ -1,9 +1,11 @@
 import React from 'react'
 import useComponentVisible from '../../hooks-utils/useComponentVisible'
+import { useIntl } from '../../hooks-utils/useIntl'
 import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 import ShareUrlModal from './ShareUrlModal'
 
 export default function ShareUrl({ isSmall, withoutInput }) {
+  const { f } = useIntl()
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
   const handleOnClick = () => {
@@ -13,7 +15,7 @@ export default function ShareUrl({ isSmall, withoutInput }) {
   return (
     <>
       <Transparentbtn handleOnClick={handleOnClick} isSmall={isSmall}>
-        Share
+        {f('share')}
       </Transparentbtn>
       <ShareUrlModal
         ref={ref}

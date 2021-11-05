@@ -7,4 +7,12 @@ module.exports = {
   images: {
     domains: ['localhost'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/k',
+        destination: '/kids',
+      },
+    ]
+  },
 }
