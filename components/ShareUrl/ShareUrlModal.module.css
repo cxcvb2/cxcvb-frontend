@@ -10,6 +10,7 @@
   z-index: 4;
   background-color: rgba(0, 0, 0, 50%);
 }
+/* remove unused css */
 .accept_btn_wrapper {
   display: flex;
   justify-content: flex-end;

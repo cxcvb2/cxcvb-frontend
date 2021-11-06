@@ -7,7 +7,7 @@ import {
   changeAcceptUrlVisibility,
   changeShareUrlVisibility,
 } from '../../redux/ShareUrlReducer'
-import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
+// import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 
 const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   const [devices, setDevices] = useState([])
@@ -18,26 +18,31 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   const isShareUrlModalVisible = useSelector(
     (state) => state.shareUrl.isShareUrlVisible
   )
-  const isAcceptUrlVisible = useSelector(
-    (state) => state.shareUrl.isAcceptUrlVisible
-  )
+  // const isAcceptUrlVisible = useSelector(
+  //   (state) => state.shareUrl.isAcceptUrlVisible
+  // )
   const [acceptURL, setAcceptURL] = useState('')
   const { ref } = useComponentVisible(false)
   const { asPath, basePath } = useRouter()
   const [metacom, setMetacom] = useState(null)
 
-  const handleOnAccept = () => {
-    dispatch(changeAcceptUrlVisibility(false))
-    setAcceptURL('')
-    router.push(acceptURL)
+  // const handleOnAccept = () => {
+  //   console.log('accept', acceptURL)
+  //   dispatch(changeAcceptUrlVisibility(false))
+  //   setAcceptURL('')
+  //   router.push(acceptURL)
+  // }
+  const handleOnClose = () => {
+    dispatch(changeShareUrlVisibility(false))
   }
   const handleOnClick = async (id) => {
     const url = inputValue ? `/${inputValue}` : router.asPath
-    try {
-      await metacom.api.shareURL.share({ id, url })
-    } catch (e) {
-      console.log(e)
-    }
+    console.log('onclick share', url)
+    // try {
+    await metacom.api.shareURL.share({ id, url })
+    // } catch (e) {
+    // console.log(e)
+    // }
     dispatch(changeShareUrlVisibility(false))
   }
 
@@ -52,21 +57,19 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
       const metacom = await Metacom.create('ws://92.63.106.41:8001/api')
       setMetacom(metacom)
       await metacom.load('shareURL')
-      await metacom.api.shareURL.listen({ name: deviceName })
+      await metacom.api.shareURL.listen({ name: deviceName || 'without name' })
       const devices = await metacom.api.shareURL.getDevices()
       // dispatch(setDevices(devices))
       setDevices(devices)
       metacom.api.shareURL.on('share', ({ url }) => {
+        console.log('share')
+        router.push(url)
         dispatch(changeShareUrlVisibility(false))
-        dispatch(changeAcceptUrlVisibility(true))
+        // dispatch(changeAcceptUrlVisibility(true))
         setAcceptURL(url)
       })
       metacom.api.shareURL.on('disconnected', ({ id }) => {
-        console.log(
-          id,
-          devices,
-          devices.filter((i) => i !== id)
-        )
+        console.log('dis')
         setDevices((prev) => prev.filter((d) => d.id !== id))
         // dispatch(removeDevices(id))
       })
@@ -82,7 +85,7 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
 
   return (
     <>
-      {isAcceptUrlVisible && (
+      {/* {isAcceptUrlVisible && (
         <div className={s.modal_wrapper}>
           <div className={s.accepturl_model} ref={ref}>
             <p>
@@ -95,13 +98,15 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {isShareUrlModalVisible && (
         <div className={s.modal_wrapper}>
           <div className={s.modal} ref={ref}>
-            <h1 className={s.modal__title}>Devices in your wifi</h1>
-            <h3 className={s.modal__url}>URL Now - {basePath + asPath}</h3>
-            <div className={s.closeModal_icon} onClick={handleOnClick} />
+            <h1 className={s.modal__title}>Share with url in your network!</h1>
+            <h3 className={s.modal__url}>
+              URL Now - {`'${basePath + asPath}'`}
+            </h3>
+            <div className={s.closeModal_icon} onClick={handleOnClose} />
 
             <input
               value={inputValue}

@@ -32,7 +32,6 @@ function MyApp({ Component, pageProps, deviceName }) {
 
 MyApp.getInitialProps = async (appContext) => {
   const userAgent = appContext?.ctx?.req?.headers['user-agent']
-  console.log(userAgent)
   const deviceDetector = new DeviceDetector()
   const { device, os } = deviceDetector.parse(userAgent)
   const deviceName = `${device?.model || device?.brand}, ${os?.name}`

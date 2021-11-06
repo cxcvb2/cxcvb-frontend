@@ -41,12 +41,7 @@ export default function FilmCardObserver({
         )
 
         setIsLoaded(false)
-        console.log({
-          call: 1,
-          query: router.query.query,
-          page,
-          count: 6,
-        })
+
         const res = await apiCall('videos.1/search', {
           query: decode(router.query.query),
           page,
@@ -66,7 +61,6 @@ export default function FilmCardObserver({
             { scroll: false, shallow: true }
           )
         }
-        console.log(res, 'ress')
         dispatch(addFilmCardsAction(res.result || []))
         setIsLoaded(true)
       }

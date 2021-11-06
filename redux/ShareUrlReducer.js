@@ -3,13 +3,14 @@ export const shareUrlInitialState = {
   isAcceptUrlVisible: false,
   devices: [],
 }
-
+//remove unused events
 const IS_SHAREURL_VISIBLE = 'IS_SHAREURL_VISIBLE'
 const IS_ACCEPT_VISIBLE = 'IS_ACCEPT_VISIBLE'
 const SET_DEVICES = 'SET_DEVICES'
 const DELETE_DEVICES = 'DELETE_DEVICES'
 
 export const ShareUrlReducer = (state = shareUrlInitialState, action) => {
+  console.log(action.type, 'actionn  ')
   switch (action.type) {
     case IS_SHAREURL_VISIBLE: {
       return {
@@ -24,7 +25,6 @@ export const ShareUrlReducer = (state = shareUrlInitialState, action) => {
       }
     }
     case SET_DEVICES: {
-      console.log(state, 'state', action.devices)
       if (action.devices) {
         return state
       }
