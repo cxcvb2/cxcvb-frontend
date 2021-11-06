@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { combineReducers, createStore } from 'redux'
 import { FilmCardsReducer, filmCardsInitialState } from './filmCardsReducer'
+import { ShareUrlReducer } from './ShareUrlReducer'
 
 let store
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
 function initStore(preloadedState = initialState) {
   return createStore(
     combineReducers({
+      shareUrl: ShareUrlReducer,
       filmCardsPage: FilmCardsReducer,
     }),
     preloadedState

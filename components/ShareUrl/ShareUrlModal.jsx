@@ -1,60 +1,145 @@
 import s from './ShareUrlModal.module.css'
-import { forwardRef, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import useComponentVisible from '../../hooks-utils/useComponentVisible'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  changeAcceptUrlVisibility,
+  changeShareUrlVisibility,
+  removeDevices,
+  setDevices,
+} from '../../redux/ShareUrlReducer'
+import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 
-const ShareUrlModal = forwardRef(function Modal(
-  { isComponentVisible, setIsComponentVisible, withoutInput },
-  ref
-) {
+const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
+  const [devices, setDevices] = useState([])
+  // const devices = useSelector((state) => state.shareUrl.devices)
+  const [inputValue, setInputValue] = useState('')
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const isShareUrlModalVisible = useSelector(
+    (state) => state.shareUrl.isShareUrlVisible
+  )
+  const isAcceptUrlVisible = useSelector(
+    (state) => state.shareUrl.isAcceptUrlVisible
+  )
+  const [acceptURL, setAcceptURL] = useState('')
+  const { ref } = useComponentVisible(false)
   const { asPath, basePath } = useRouter()
-  const [devices, setDevices] = useState([
-    { id: 1, deviceName: 'iphone' },
-    { id: 2, deviceName: 'xiaomi' },
-  ])
-  const handleOnClick = () => {
-    setIsComponentVisible((prev) => !prev)
+  const [metacom, setMetacom] = useState(null)
+
+  const handleOnAccept = () => {
+    dispatch(changeAcceptUrlVisibility(false))
+    setAcceptURL('')
+    router.push(acceptURL)
+  }
+  const handleOnClick = async (id) => {
+    const url = inputValue ? `/${inputValue}` : router.asPath
+    try {
+      await metacom.api.shareURL.share({ id, url })
+    } catch (e) {
+      console.log(e)
+    }
+    dispatch(changeShareUrlVisibility(false))
+  }
+
+  const handleOnChange = (e) => {
+    setInputValue(e.target.value)
   }
   useEffect(() => {
-    // ;(async () => {
-    //   const { MetacomListenShareUrl, MetacomGetDevices, metacom } =
-    //     await import('../../hooks-utils/useMetacom')
-    //   console.log(metacom, 'meta')
-    //   if (metacom) {
-    //     await MetacomListenShareUrl()
-    //     setDevices(await MetacomGetDevices())
-    //   }
-    // })()
-  }, [])
-  console.log(devices)
+    ;(async () => {
+      if (!metacom) {
+        const { Metacom } = await import('../../lib/metacom')
+        const metacom = await Metacom.create('ws://92.63.106.41:8001/api')
+        setMetacom(metacom)
+        await metacom.load('shareURL')
+        await metacom.api.shareURL.listen({ name: 'deviceName' })
+        const alreadyConnecteddevices = await metacom.api.shareURL.getDevices()
+        setDevices(alreadyConnecteddevices)
+        console.log(alreadyConnecteddevices, 'a')
+      }
+      // dispatch(setDevices(devices))
+    })()
+  }, [dispatch, metacom])
+
+  useEffect(() => {
+    ;(async () => {
+      console.log('create connection', metacom)
+
+      metacom?.api?.shareURL?.on('share', ({ url }) => {
+        dispatch(changeShareUrlVisibility(false))
+        dispatch(changeAcceptUrlVisibility(true))
+        setAcceptURL(url)
+      })
+      metacom?.api?.shareURL?.on('disconnected', ({ id }) => {
+        console.log(
+          id,
+          devices,
+          devices.filter((i) => i !== id)
+        )
+        setDevices((prev) => prev.filter((d) => d.id !== id))
+        // dispatch(removeDevices(id))
+      })
+
+      metacom?.api?.shareURL?.on('connected', ({ id, name }) => {
+        console.log('con', id, name)
+        console.log(devices, [...devices, { id, name }])
+        setDevices((prev) => [...prev, { id, name }])
+        // dispatch(setDevices([{ id, name }]))
+      })
+    })()
+  }, [dispatch, metacom])
+
   return (
     <>
-      {isComponentVisible && (
+      {isAcceptUrlVisible && (
+        <div className={s.modal_wrapper}>
+          <div className={s.accepturl_model} ref={ref}>
+            <p>
+              accept sharing with this url <b>{`'${acceptURL}'`}</b> ?
+            </p>
+            <div className={s.accept_btn_wrapper}>
+              <Transparentbtn handleOnClick={handleOnAccept} isSmall>
+                Accept
+              </Transparentbtn>
+            </div>
+          </div>
+        </div>
+      )}
+      {isShareUrlModalVisible && (
         <div className={s.modal_wrapper}>
           <div className={s.modal} ref={ref}>
             <h1 className={s.modal__title}>Devices in your wifi</h1>
             <h3 className={s.modal__url}>URL Now - {basePath + asPath}</h3>
             <div className={s.closeModal_icon} onClick={handleOnClick} />
-            {withoutInput || (
-              <input
-                type="text"
-                placeholder="another url you want to send"
-                className={s.modal_input}
-              />
-            )}
+
+            <input
+              value={inputValue}
+              onChange={handleOnChange}
+              type="text"
+              placeholder="another url you want to send"
+              className={s.modal_input}
+            />
+
             <ul className={s.devices_wrapper}>
-              {devices.map((device) => (
-                <li
-                  className={s.device}
-                  onClick={handleOnClick}
-                  key={device.id}
-                >
-                  {device.deviceName}
-                </li>
-              ))}
+              {devices.length ? (
+                devices.map((device, i) => (
+                  <li
+                    className={s.device}
+                    onClick={() => handleOnClick(device.id)}
+                    key={device.id}
+                  >
+                    {device.name || `user ${i + 1}`}
+                  </li>
+                ))
+              ) : (
+                <h2>there is no devices</h2>
+              )}
             </ul>
           </div>
         </div>
       )}
+      {}
     </>
   )
 })

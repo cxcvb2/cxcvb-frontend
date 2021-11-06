@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import React, { useEffect } from 'react'
+import React from 'react'
 import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import useLang from '../content/locale'
@@ -8,25 +8,14 @@ import { Provider } from 'react-redux'
 import { useStore } from '../redux/store'
 import HeadLoayout from '../components/Layout/HeadLoayout'
 import DeviceDetector from 'device-detector-js'
+import ShareUrlModal from '../components/ShareUrl/ShareUrlModal'
+// import ShareUrl from '../components/ShareUrl/ShareUrl'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, deviceName }) {
   const store = useStore(pageProps.initialReduxState)
   const router = useRouter()
   const { messages, locale, defaultLocale } = useLang(router)
-  useEffect(() => {
-    ;(async () => {
-      if (window) {
-        const { MetacomCreate } = await import('../hooks-utils/useMetacom')
-        MetacomCreate()
-        const { MetacomListenShareUrl } = await import(
-          '../hooks-utils/useMetacom'
-        )
-        MetacomListenShareUrl('hi')
-        const { MetacomGetDevices } = await import('../hooks-utils/useMetacom')
-        MetacomGetDevices()
-      }
-    })()
-  }, [])
+  console.log('app')
   return (
     <Provider store={store}>
       <IntlProvider
@@ -35,6 +24,7 @@ function MyApp({ Component, pageProps }) {
         messages={messages}
       >
         <HeadLoayout />
+        <ShareUrlModal deviceName={deviceName} />
         <Component {...pageProps} />
       </IntlProvider>
     </Provider>
@@ -42,10 +32,11 @@ function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = async (appContext) => {
-  const userAgent = appContext.ctx.req.headers['user-agent']
+  const userAgent = appContext?.ctx?.req?.headers['user-agent']
   console.log(userAgent)
   const deviceDetector = new DeviceDetector()
   const { device, os } = deviceDetector.parse(userAgent)
+  const deviceName = `${device?.model || device?.brand}, ${os?.name}`
 
   const appProps = await App.getInitialProps(appContext)
   if (appContext.ctx?.req?.headers['accept-language']) {
@@ -67,7 +58,7 @@ MyApp.getInitialProps = async (appContext) => {
     }
   }
 
-  return { ...appProps }
+  return { ...appProps, deviceName }
 }
 
 export default MyApp

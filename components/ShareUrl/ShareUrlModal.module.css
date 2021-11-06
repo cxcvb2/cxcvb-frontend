@@ -10,6 +10,19 @@
   z-index: 4;
   background-color: rgba(0, 0, 0, 50%);
 }
+.accept_btn_wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.accepturl_model {
+  background-color: #201d48;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  border-radius: 20px;
+  padding: 20px;
+}
 .modal {
   display: flex;
   flex-direction: column;
@@ -29,7 +42,9 @@
   margin-top: 0.3rem;
 }
 .devices_wrapper {
-  padding: 10px;
+  max-height: 200px;
+  overflow-y: scroll;
+  margin-top: 10px;
 }
 .device {
   font-size: 20px;
@@ -51,18 +66,16 @@
   background-color: #2c2666;
   color: white;
 }
-.modal {
-  overflow-y: scroll;
-}
-.modal::-webkit-scrollbar {
+
+.devices_wrapper::-webkit-scrollbar {
   width: 5px;
 }
 
-.modal::-webkit-scrollbar-track {
+.devices_wrapper::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-.modal::-webkit-scrollbar-thumb {
+.devices_wrapper::-webkit-scrollbar-thumb {
   background: #6666af;
   border-radius: 10px;
 }
