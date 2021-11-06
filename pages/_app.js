@@ -9,13 +9,12 @@ import { useStore } from '../redux/store'
 import HeadLoayout from '../components/Layout/HeadLoayout'
 import DeviceDetector from 'device-detector-js'
 import ShareUrlModal from '../components/ShareUrl/ShareUrlModal'
-// import ShareUrl from '../components/ShareUrl/ShareUrl'
 
 function MyApp({ Component, pageProps, deviceName }) {
   const store = useStore(pageProps.initialReduxState)
   const router = useRouter()
   const { messages, locale, defaultLocale } = useLang(router)
-  console.log('app')
+
   return (
     <Provider store={store}>
       <IntlProvider

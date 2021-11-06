@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   changeAcceptUrlVisibility,
   changeShareUrlVisibility,
-  removeDevices,
-  setDevices,
 } from '../../redux/ShareUrlReducer'
 import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
 
@@ -46,32 +44,24 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   const handleOnChange = (e) => {
     setInputValue(e.target.value)
   }
-  useEffect(() => {
-    ;(async () => {
-      if (!metacom) {
-        const { Metacom } = await import('../../lib/metacom')
-        const metacom = await Metacom.create('ws://92.63.106.41:8001/api')
-        setMetacom(metacom)
-        await metacom.load('shareURL')
-        await metacom.api.shareURL.listen({ name: 'deviceName' })
-        const alreadyConnecteddevices = await metacom.api.shareURL.getDevices()
-        setDevices(alreadyConnecteddevices)
-        console.log(alreadyConnecteddevices, 'a')
-      }
-      // dispatch(setDevices(devices))
-    })()
-  }, [dispatch, metacom])
 
   useEffect(() => {
     ;(async () => {
       console.log('create connection', metacom)
-
-      metacom?.api?.shareURL?.on('share', ({ url }) => {
+      const { Metacom } = await import('../../lib/metacom')
+      const metacom = await Metacom.create('ws://92.63.106.41:8001/api')
+      setMetacom(metacom)
+      await metacom.load('shareURL')
+      await metacom.api.shareURL.listen({ name: deviceName })
+      const devices = await metacom.api.shareURL.getDevices()
+      // dispatch(setDevices(devices))
+      setDevices(devices)
+      metacom.api.shareURL.on('share', ({ url }) => {
         dispatch(changeShareUrlVisibility(false))
         dispatch(changeAcceptUrlVisibility(true))
         setAcceptURL(url)
       })
-      metacom?.api?.shareURL?.on('disconnected', ({ id }) => {
+      metacom.api.shareURL.on('disconnected', ({ id }) => {
         console.log(
           id,
           devices,
@@ -81,14 +71,14 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
         // dispatch(removeDevices(id))
       })
 
-      metacom?.api?.shareURL?.on('connected', ({ id, name }) => {
+      metacom.api.shareURL.on('connected', ({ id, name }) => {
         console.log('con', id, name)
         console.log(devices, [...devices, { id, name }])
         setDevices((prev) => [...prev, { id, name }])
         // dispatch(setDevices([{ id, name }]))
       })
     })()
-  }, [dispatch, metacom])
+  }, [])
 
   return (
     <>
