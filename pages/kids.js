@@ -79,7 +79,7 @@ export const getServerSideProps = async ({ query, locale }) => {
 
   return {
     props: {
-      video: result,
+      video: result || {},
     },
   }
 }
