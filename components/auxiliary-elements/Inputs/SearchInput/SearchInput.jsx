@@ -14,11 +14,12 @@ export default function SearchInput({ inputRef }) {
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
-
+  console.log(router)
   const loadRecomendation = async (value) => {
     if (value.trim().length && query !== value) {
       const { result } = await apiCall('videos/predict', {
         query: value,
+        locale: router.locale,
       })
       setSearchInputRec(result)
       setIsSearchInputRecOpened(result?.length || false)

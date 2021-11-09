@@ -31,12 +31,15 @@ export default function VideoLayout({ withquery = false, opened, result }) {
       })
 
       if (!isVideoInResult) {
-        const res = await apiCall('videos/getById', { videoId: opened })
+        const res = await apiCall('videos/getById', {
+          videoId: opened,
+          locale: router.locale,
+        })
         setCurrentVideo(res.result)
       }
     }
     fetchData()
-  }, [opened, result])
+  }, [opened, result, router.locale])
   return (
     <div className={s.videoLayout_wrapper}>
       <section className={s.videoLayout}>

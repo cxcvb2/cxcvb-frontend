@@ -46,6 +46,7 @@ export default function FilmCardObserver({
           query: decode(router.query.query),
           page,
           count: 6,
+          locale: router.locale,
         })
         if (!res?.result?.length) {
           setIsFilmCardsObserved(false)

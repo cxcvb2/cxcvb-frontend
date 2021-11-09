@@ -26,8 +26,8 @@ export default function TopVideos({ topVideos }) {
   )
 }
 
-export const getServerSideProps = async () => {
-  const res = await apiCall('videos/top', { call: 1 })
+export const getServerSideProps = async ({ locale }) => {
+  const res = await apiCall('videos/top', { call: 1, locale })
   return {
     props: {
       topVideos: res.result,

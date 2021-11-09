@@ -4,10 +4,20 @@ import { useRouter } from 'next/router'
 import useComponentVisible from '../../hooks-utils/useComponentVisible'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  changeAcceptUrlVisibility,
+  // changeAcceptUrlVisibility,
   changeShareUrlVisibility,
 } from '../../redux/ShareUrlReducer'
 // import Transparentbtn from '../auxiliary-elements/Buttons/Transparentbtn/Transparentbtn'
+
+function isValidHttpUrl(string) {
+  let url
+  try {
+    url = new URL(string)
+  } catch (_) {
+    return false
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:'
+}
 
 const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   const [devices, setDevices] = useState([])
@@ -36,7 +46,7 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
     dispatch(changeShareUrlVisibility(false))
   }
   const handleOnClick = async (id) => {
-    const url = inputValue ? `/${inputValue}` : router.asPath
+    const url = inputValue ? inputValue : router.asPath
     console.log('onclick share', url)
     // try {
     await metacom.api.shareURL.share({ id, url })
@@ -63,10 +73,13 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
       setDevices(devices)
       metacom.api.shareURL.on('share', ({ url }) => {
         console.log('share')
-        router.push(url)
         dispatch(changeShareUrlVisibility(false))
+        if (isValidHttpUrl(url)) {
+          return (location.href = url)
+        }
+        router.push(url[0] !== '/' ? `/${url}` : url)
         // dispatch(changeAcceptUrlVisibility(true))
-        setAcceptURL(url)
+        // setAcceptURL(url)
       })
       metacom.api.shareURL.on('disconnected', ({ id }) => {
         console.log('dis')
@@ -102,7 +115,7 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
       {isShareUrlModalVisible && (
         <div className={s.modal_wrapper}>
           <div className={s.modal} ref={ref}>
-            <h1 className={s.modal__title}>Share with url in your network!</h1>
+            <h1 className={s.modal__title}>Share Video</h1>
             <h3 className={s.modal__url}>
               URL Now - {`'${basePath + asPath}'`}
             </h3>

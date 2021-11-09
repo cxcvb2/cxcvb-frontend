@@ -59,11 +59,12 @@ export default function Kids({ video }) {
     </main>
   )
 }
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ query, locale }) => {
   const videoId = query?.videoId
   if (videoId) {
     const { result } = await apiCall('videos/getById', {
       videoId,
+      locale,
     })
     return {
       props: {
@@ -73,6 +74,7 @@ export const getServerSideProps = async ({ query }) => {
   }
   const { result } = await apiCall('videos.1/getRandom', {
     type: 'ForKids',
+    locale,
   })
 
   return {
