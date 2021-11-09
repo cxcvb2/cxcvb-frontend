@@ -28,7 +28,7 @@ export default function Kids({ video }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [])
+  }, [push])
 
   return (
     <main className={s.main}>

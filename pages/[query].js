@@ -46,7 +46,7 @@ export const getServerSideProps = async ({ query, locale }) => {
   const reduxStore = initializeStore()
   const { dispatch } = reduxStore
   const page = parseInt(query.p) || 1
-  console.log(a)
+
   const res = await apiCall('videos.1/search', {
     query: decode(query.query),
     page,
