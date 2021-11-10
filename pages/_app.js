@@ -40,6 +40,7 @@ MyApp.getInitialProps = async (appContext) => {
   if (appContext.ctx?.req?.headers['accept-language']) {
     const locales = appContext.router.locales
     const locale = appContext.router.locale
+
     const regex = /([^-;]*)(?:-([^;]*))?(?:;q=([0-9]\.[0-9]))?/
     const accept_languages =
       appContext.ctx.req.headers['accept-language'].match(regex)
@@ -48,7 +49,7 @@ MyApp.getInitialProps = async (appContext) => {
       locales.find((local) => accept_languages.includes(local)) ||
       appContext.router.defaultLocale
 
-    if (appContext.ctx.res && accept_language !== locale) {
+    if (appContext.ctx.res && accept_language !== locale && !locale) {
       appContext.ctx.res.writeHead(307, {
         Location: `/${accept_language}${appContext.router.asPath}`,
       })

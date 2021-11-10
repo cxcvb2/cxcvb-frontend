@@ -51,7 +51,6 @@ export const getServerSideProps = async ({ query, locale }) => {
     query: decode(query.query),
     page,
     count: 6,
-    locale,
   })
   dispatch(resetFilmCardsAction(res.result))
   //if result is null(error) make redirect

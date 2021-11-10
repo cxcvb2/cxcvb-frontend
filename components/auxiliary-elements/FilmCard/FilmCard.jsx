@@ -38,7 +38,7 @@ export default function FilmCard({
       : s.filmcard
 
   const filmCardImg = isThumbnailLoad
-    ? `/api/imageproxy?url=${isThumbnailLoad}`
+    ? isThumbnailLoad
     : '/images/not-thumbnail.png'
 
   const page = query.p || 1

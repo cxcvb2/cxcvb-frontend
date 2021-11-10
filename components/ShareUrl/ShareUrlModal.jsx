@@ -47,12 +47,8 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   }
   const handleOnClick = async (id) => {
     const url = inputValue ? inputValue : router.asPath
-    console.log('onclick share', url)
-    // try {
     await metacom.api.shareURL.share({ id, url })
-    // } catch (e) {
-    // console.log(e)
-    // }
+
     dispatch(changeShareUrlVisibility(false))
   }
 

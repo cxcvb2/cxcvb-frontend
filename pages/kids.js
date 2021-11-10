@@ -28,7 +28,7 @@ export default function Kids({ video }) {
         { scroll: false, shallow: true }
       )
     }
-  }, [push])
+  }, [])
 
   return (
     <main className={s.main}>
@@ -76,7 +76,7 @@ export const getServerSideProps = async ({ query, locale }) => {
     type: 'ForKids',
     locale,
   })
-
+  console.log({ result })
   return {
     props: {
       video: result || {},
