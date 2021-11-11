@@ -1,34 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { apiCall } from '../api/api'
 import s from '../styles/kids.module.css'
 import skl from '../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css'
 import SearchInput from '../components/auxiliary-elements/Inputs/SearchInput/SearchInput'
 import KeyCodeInput from '../components/auxiliary-elements/Inputs/KeyCodeInput/KeyCodeInput'
 import DecoratedLink from '../components/auxiliary-elements/DecoratedLink/DecoratedLink'
-import { useRouter } from 'next/router'
+
 export default function Kids({ video }) {
-  const {
-    query: { videoId },
-    push,
-  } = useRouter()
   const [iframeIsLoaded, setIframeIsLoaded] = useState(true)
   const inputRef = useRef()
   const isSkeleton = iframeIsLoaded
     ? `${s.video_wrapper} ${skl.skeleton}`
     : s.video_wrapper
-
-  useEffect(() => {
-    if (!videoId) {
-      push(
-        {
-          pathname: '/kids',
-          query: { videoId: video.videoId },
-        },
-        undefined,
-        { scroll: false, shallow: true }
-      )
-    }
-  }, [])
 
   return (
     <main className={s.main}>
@@ -59,19 +42,7 @@ export default function Kids({ video }) {
     </main>
   )
 }
-export const getServerSideProps = async ({ query, locale }) => {
-  const videoId = query?.videoId
-  if (videoId) {
-    const { result } = await apiCall('videos/getById', {
-      videoId,
-      locale,
-    })
-    return {
-      props: {
-        video: result,
-      },
-    }
-  }
+export const getServerSideProps = async ({ locale }) => {
   const { result } = await apiCall('videos.1/getRandom', {
     type: 'ForKids',
     locale,
