@@ -1,21 +1,13 @@
 import s from './VideoLayout.module.css'
 import { useState } from 'react'
 import skl from '../../../hooks-utils/SkeletonWrapper/SkeletonWrapper.module.css'
-import Transparentbtn from '../Buttons/Transparentbtn/Transparentbtn'
-import { useIntl } from '../../../hooks-utils/useIntl'
-import { useDispatch } from 'react-redux'
-import { changeShareUrlVisibility } from '../../../redux/ShareUrlReducer'
 
 export default function CurrentVideoCheck({ currentVideo }) {
-  const { f } = useIntl()
   const [iframeIsLoaded, setIframeIsLoaded] = useState(true)
   const isSkeleton = iframeIsLoaded
     ? `${s.videoLayout__video_wrapper} ${skl.skeleton}`
     : s.videoLayout__video_wrapper
-  const dispatch = useDispatch()
-  const handleOnClick = () => {
-    dispatch(changeShareUrlVisibility(true))
-  }
+
   return (
     <>
       {currentVideo ? (
@@ -39,9 +31,6 @@ export default function CurrentVideoCheck({ currentVideo }) {
             <p className={s.videoLayout__desc}>{currentVideo.description}</p>
             <div className={s.videoLayout__host__wrapper}>
               <p className={s.videoLayout__host}>{currentVideo.host}</p>
-              <Transparentbtn handleOnClick={handleOnClick} isSmall>
-                {f('share')}
-              </Transparentbtn>
             </div>
           </div>
         </>
