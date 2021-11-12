@@ -31,8 +31,21 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   // const isAcceptUrlVisible = useSelector(
   //   (state) => state.shareUrl.isAcceptUrlVisible
   // )
-  const [acceptURL, setAcceptURL] = useState('')
-  const { ref } = useComponentVisible(false)
+  const handleOnClose = () => {
+    dispatch(changeShareUrlVisibility(false))
+    const newURI = { ...router.query }
+    delete newURI.share
+    router.replace({
+      pathname: router.pathname,
+      query: newURI,
+    })
+  }
+  useEffect(() => {
+    if (router.query.share || router.query.share === '') {
+      dispatch(changeShareUrlVisibility(true))
+    }
+  }, [dispatch, router.query.share])
+  const { ref } = useComponentVisible(handleOnClose)
   const { asPath, basePath } = useRouter()
   const [metacom, setMetacom] = useState(null)
 
@@ -42,14 +55,11 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   //   setAcceptURL('')
   //   router.push(acceptURL)
   // }
-  const handleOnClose = () => {
-    dispatch(changeShareUrlVisibility(false))
-  }
+
   const handleOnClick = async (id) => {
     const url = inputValue ? inputValue : router.asPath
     await metacom.api.shareURL.share({ id, url })
-
-    dispatch(changeShareUrlVisibility(false))
+    handleOnClose()
   }
 
   const handleOnChange = (e) => {
@@ -94,20 +104,6 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
 
   return (
     <>
-      {/* {isAcceptUrlVisible && (
-        <div className={s.modal_wrapper}>
-          <div className={s.accepturl_model} ref={ref}>
-            <p>
-              accept sharing with this url <b>{`'${acceptURL}'`}</b> ?
-            </p>
-            <div className={s.accept_btn_wrapper}>
-              <Transparentbtn handleOnClick={handleOnAccept} isSmall>
-                Accept
-              </Transparentbtn>
-            </div>
-          </div>
-        </div>
-      )} */}
       {isShareUrlModalVisible && (
         <div className={s.modal_wrapper}>
           <div className={s.modal} ref={ref}>

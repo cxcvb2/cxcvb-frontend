@@ -5,12 +5,15 @@ import { useIntl } from '../hooks-utils/useIntl'
 import MainLayout from '../components/Layout/MainLayout'
 import { useDispatch } from 'react-redux'
 import { changeShareUrlVisibility } from '../redux/ShareUrlReducer'
+import { useRouter } from 'next/router'
 
 export default function DashboardPage() {
   const { f } = useIntl()
   const dispatch = useDispatch()
+  const { replace, pathname } = useRouter()
   const handleOnClick = () => {
     dispatch(changeShareUrlVisibility(true))
+    replace(`${pathname}?share`)
   }
   return (
     <MainLayout>

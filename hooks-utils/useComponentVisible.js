@@ -1,25 +1,17 @@
 import { useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import {
-  changeShareUrlVisibility,
-  // changeAcceptUrlVisibility,
-} from '../redux/ShareUrlReducer'
 
-export default function useComponentVisible() {
-  const dispatch = useDispatch()
+export default function useComponentVisible(handleOnClose) {
   const ref = useRef(null)
 
   const handleHideDropdown = (event) => {
     if (event.key === 'Escape') {
-      dispatch(changeShareUrlVisibility(false))
-      // dispatch(changeAcceptUrlVisibility(false))
+      handleOnClose()
     }
   }
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      dispatch(changeShareUrlVisibility(false))
-      // dispatch(changeAcceptUrlVisibility(false))
+      handleOnClose()
     }
   }
 

@@ -42,7 +42,7 @@ export default function SaerchedPage({ resLength }) {
   )
 }
 
-export const getServerSideProps = async ({ query, locale }) => {
+export const getServerSideProps = async ({ query }) => {
   const reduxStore = initializeStore()
   const { dispatch } = reduxStore
   const page = parseInt(query.p) || 1

@@ -34,7 +34,10 @@ MyApp.getInitialProps = async (appContext) => {
   const userAgent = appContext?.ctx?.req?.headers['user-agent']
   const deviceDetector = new DeviceDetector()
   const { device, os } = deviceDetector.parse(userAgent)
-  const deviceName = `${device?.model + ',' || device?.brand + ','} ${os?.name}`
+  let deviceName = ''
+  if (device?.model) deviceName = `${device?.model}, `
+  if (device?.brand) deviceName += `${device?.brand}, `
+  if (os?.name) deviceName += `${os.name}`
 
   const appProps = await App.getInitialProps(appContext)
   if (appContext.ctx?.req?.headers['accept-language']) {

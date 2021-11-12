@@ -6,11 +6,14 @@ import { useState, useRef } from 'react'
 import { apiCall } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
 import { decode, encode } from 'url-encode-decode'
+import { navItems } from '../../../Navigation/Navigation'
 export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInputVal, setSearchInputVal] = useState(decode(query) || '')
+  const [searchInputVal, setSearchInputVal] = useState(
+    (!navItems.includes(query) && decode(query)) || ''
+  )
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
