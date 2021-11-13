@@ -46,8 +46,8 @@ export default function FilmCardObserver({
           query: decode(router.query.query),
           page,
           count: 6,
-          locale: router.locale,
         })
+
         if (!res?.result?.length) {
           setIsFilmCardsObserved(false)
           router.push(
@@ -62,6 +62,7 @@ export default function FilmCardObserver({
             { scroll: false, shallow: true }
           )
         }
+        console.log({ result: res })
         dispatch(addFilmCardsAction(res.result || []))
         setIsLoaded(true)
       }
