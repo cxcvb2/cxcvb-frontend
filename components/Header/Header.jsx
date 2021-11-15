@@ -5,7 +5,7 @@ import Navigation from '../Navigation/Navigation'
 import { useSelector } from 'react-redux'
 
 export default function Header({ inputRef }) {
-  const keyCode = useSelector((state) => state.keyCode)
+  const keyCode = useSelector((state) => state.filmCardsPage.keyCode)
 
   return (
     <header>

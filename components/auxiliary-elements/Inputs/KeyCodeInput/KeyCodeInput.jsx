@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import s from './KeyCodeInput.module.css'
-import { changeKeyCodeAction } from '../../../../redux/store'
+import { changeKeyCodeAction } from '../../../../redux/filmCardsReducer'
 import { useDispatch } from 'react-redux'
 import NavigateOnKeyCodeChange from '../../../../hooks-utils/NavigateOnKeyCodeChange'
 import { useRouter } from 'next/router'
@@ -35,13 +35,12 @@ export default function KeyCodeInput({ inputRef }) {
     return () => {
       document.removeEventListener('keydown', onKeydown)
     }
-  }, [inputRef, setIsKeyInputOpened,dispatch])
+  }, [inputRef, setIsKeyInputOpened, dispatch])
 
   const keyCodechangeing = (value) => {
     clearTimeout(onKeydownTimeout)
 
     if (value) {
-      console.log({ value })
       NavigateOnKeyCodeChange({ keyCode: value, router })
       dispatch(changeKeyCodeAction(value))
     }

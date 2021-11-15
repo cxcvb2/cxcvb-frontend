@@ -3,29 +3,31 @@ import s from './SearchInput.module.css'
 import { useIntl } from '../../../../hooks-utils/useIntl'
 import { useRouter } from 'next/router'
 import { useState, useRef } from 'react'
-import { LoadInputCompleteRec } from '../../../../api/api'
+import { apiCall } from '../../../../api/api'
 import SearchInputRecDropdown from './SearchInputRecDropdown'
 import { decode, encode } from 'url-encode-decode'
+import { navItems } from '../../../Navigation/Navigation'
 export default function SearchInput({ inputRef }) {
   const { f } = useIntl()
   const router = useRouter()
   const { query } = router.query
-  const [searchInputVal, setSearchInputVal] = useState(decode(query) || '')
+  const [searchInputVal, setSearchInputVal] = useState(
+    (!navItems.includes(query) && decode(query)) || ''
+  )
   const [searchInputRec, setSearchInputRec] = useState([])
   const [isSearchInputRecOpened, setIsSearchInputRecOpened] = useState(false)
   const searchInputWrapper = useRef()
-
   const loadRecomendation = async (value) => {
     if (value.trim().length && query !== value) {
-      const { result } = await LoadInputCompleteRec({ call: 1, query: value })
+      const { result } = await apiCall('videos/predict', {
+        query: value,
+        locale: router.locale,
+      })
       setSearchInputRec(result)
-      if (result?.length) {
-        setIsSearchInputRecOpened(true)
-      } else {
-        setIsSearchInputRecOpened(false)
-      }
+      setIsSearchInputRecOpened(result?.length || false)
     }
   }
+
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     inputRef.current.blur()
@@ -84,7 +86,7 @@ export default function SearchInput({ inputRef }) {
           />
         ) : null}
       </form>
-      {searchInputRec.length && isSearchInputRecOpened ? (
+      {searchInputRec?.length && isSearchInputRecOpened ? (
         <SearchInputRecDropdown
           searchInputRec={searchInputRec}
           isSearchInputRecOpened={isSearchInputRecOpened}

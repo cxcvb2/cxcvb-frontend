@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { LoadVideoById } from '../../../api/api'
-import { changeKeyCodeAction } from '../../../redux/store'
+import { apiCall } from '../../../api/api'
+import { changeKeyCodeAction } from '../../../redux/filmCardsReducer'
 import CurrentVideoCheck from './CurrentVideoCheck'
 import s from './VideoLayout.module.css'
 
@@ -31,12 +31,15 @@ export default function VideoLayout({ withquery = false, opened, result }) {
       })
 
       if (!isVideoInResult) {
-        const res = await LoadVideoById({ call: 1, videoId: opened })
+        const res = await apiCall('videos/getById', {
+          videoId: opened,
+          locale: router.locale,
+        })
         setCurrentVideo(res.result)
       }
     }
     fetchData()
-  }, [opened, result])
+  }, [opened, result, router.locale])
   return (
     <div className={s.videoLayout_wrapper}>
       <section className={s.videoLayout}>

@@ -46,7 +46,8 @@
 .videoLayout__host {
   font-weight: 500;
   color: #c5c5ff;
-  margin-top: 1rem;
+  display: flex;
+  align-items: center;
   font-size: 18px;
 }
 
@@ -54,6 +55,12 @@
   margin-top: 1rem;
   font-size: 16px;
   color: #c5c5ff;
+}
+.videoLayout__host__wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  column-gap: 5px;
 }
 .videoLayout__errormessage {
   margin: 50px;
@@ -116,6 +123,7 @@
     height: auto;
     overflow-y: initial;
   }
+
   .videoLayout__video_wrapper {
     height: 50vw;
   }
@@ -124,10 +132,14 @@
     transform: scale(0.8);
     right: -2px;
   }
+  .videoLayout__host__wrapper {
+    margin: 0;
+    padding: 1rem 0;
+  }
 }
 @media (max-width: 510px) {
   .videoLayout__video_wrapper {
-    height: 63vw;
+    height: 70vw;
   }
 }
 /* x in videoLayout__close  */

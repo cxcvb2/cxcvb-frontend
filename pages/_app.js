@@ -3,15 +3,18 @@ import React from 'react'
 import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import useLang from '../content/locale'
-import MainLayout from '../components/Layout/MainLayout'
 import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import { useStore } from '../redux/store'
+import HeadLoayout from '../components/Layout/HeadLoayout'
+import DeviceDetector from 'device-detector-js'
+import ShareUrlModal from '../components/ShareUrl/ShareUrlModal'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, deviceName }) {
   const store = useStore(pageProps.initialReduxState)
   const router = useRouter()
   const { messages, locale, defaultLocale } = useLang(router)
+
   return (
     <Provider store={store}>
       <IntlProvider
@@ -19,19 +22,28 @@ function MyApp({ Component, pageProps }) {
         defaultLocale={defaultLocale}
         messages={messages}
       >
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <HeadLoayout />
+        <ShareUrlModal deviceName={deviceName} />
+        <Component {...pageProps} />
       </IntlProvider>
     </Provider>
   )
 }
 
 MyApp.getInitialProps = async (appContext) => {
+  const userAgent = appContext?.ctx?.req?.headers['user-agent']
+  const deviceDetector = new DeviceDetector()
+  const { device, os } = deviceDetector.parse(userAgent)
+  let deviceName = ''
+  if (device?.model) deviceName = `${device?.model}, `
+  if (device?.brand) deviceName += `${device?.brand}, `
+  if (os?.name) deviceName += `${os.name}`
+
   const appProps = await App.getInitialProps(appContext)
   if (appContext.ctx?.req?.headers['accept-language']) {
     const locales = appContext.router.locales
     const locale = appContext.router.locale
+
     const regex = /([^-;]*)(?:-([^;]*))?(?:;q=([0-9]\.[0-9]))?/
     const accept_languages =
       appContext.ctx.req.headers['accept-language'].match(regex)
@@ -40,7 +52,7 @@ MyApp.getInitialProps = async (appContext) => {
       locales.find((local) => accept_languages.includes(local)) ||
       appContext.router.defaultLocale
 
-    if (appContext.ctx.res && accept_language !== locale) {
+    if (appContext.ctx.res && accept_language !== locale && !locale) {
       appContext.ctx.res.writeHead(307, {
         Location: `/${accept_language}${appContext.router.asPath}`,
       })
@@ -48,7 +60,7 @@ MyApp.getInitialProps = async (appContext) => {
     }
   }
 
-  return { ...appProps }
+  return { ...appProps, deviceName }
 }
 
 export default MyApp

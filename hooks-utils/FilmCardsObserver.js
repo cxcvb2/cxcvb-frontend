@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { LoadVideos } from '../api/api'
-import { addFilmCardsAction } from '../redux/store'
+import { decode } from 'url-encode-decode'
+import { apiCall } from '../api/api'
+import { addFilmCardsAction } from '../redux/filmCardsReducer'
 
 export default function FilmCardObserver({
   resLength,
@@ -27,7 +28,6 @@ export default function FilmCardObserver({
         }
         let opened = router.query.opened
         opened && (paramsquery = { ...paramsquery, opened })
-        console.log(paramsquery)
 
         router.push(
           {
@@ -41,13 +41,14 @@ export default function FilmCardObserver({
         )
 
         setIsLoaded(false)
-        const res = await LoadVideos({
-          call: 1,
-          query: router.query.query,
+
+        const res = await apiCall('videos.1/search', {
+          query: decode(router.query.query),
           page,
           count: 6,
         })
-        if (!res.result.length) {
+
+        if (!res?.result?.length) {
           setIsFilmCardsObserved(false)
           router.push(
             {
@@ -61,7 +62,8 @@ export default function FilmCardObserver({
             { scroll: false, shallow: true }
           )
         }
-        dispatch(addFilmCardsAction(res.result))
+        console.log({ result: res })
+        dispatch(addFilmCardsAction(res.result || []))
         setIsLoaded(true)
       }
     }
@@ -70,7 +72,7 @@ export default function FilmCardObserver({
     return () => {
       observer.disconnect()
     }
-  }, [router.query])
+  }, [dispatch, router, router.query, setIsFilmCardsObserved, setIsLoaded])
 
   return <div style={{ display: resLength < 6 && 'none' }} ref={observedEl} />
 }
