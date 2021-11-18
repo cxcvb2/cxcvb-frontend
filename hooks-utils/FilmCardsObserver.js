@@ -62,7 +62,6 @@ export default function FilmCardObserver({
             { scroll: false, shallow: true }
           )
         }
-        console.log({ result: res })
         dispatch(addFilmCardsAction(res.result || []))
         setIsLoaded(true)
       }

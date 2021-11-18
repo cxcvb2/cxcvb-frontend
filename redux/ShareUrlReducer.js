@@ -10,7 +10,6 @@ const SET_DEVICES = 'SET_DEVICES'
 const DELETE_DEVICES = 'DELETE_DEVICES'
 
 export const ShareUrlReducer = (state = shareUrlInitialState, action) => {
-  console.log(action.type, 'actionn  ')
   switch (action.type) {
     case IS_SHAREURL_VISIBLE: {
       return {
