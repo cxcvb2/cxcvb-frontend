@@ -12,6 +12,7 @@ export default function TopVideos({ topVideos }) {
   const { opened } = router.query
   const mainclasses =
     opened && topVideos.length ? `${s.main_two_columns} ${s.main}` : s.main
+
   return (
     <MainLayout>
       <main>
@@ -28,7 +29,6 @@ export default function TopVideos({ topVideos }) {
 
 export const getServerSideProps = async ({ locale }) => {
   const res = await apiCall('videos/top', { call: 1, locale })
-  console.log({ res })
   return {
     props: {
       topVideos: res.result,

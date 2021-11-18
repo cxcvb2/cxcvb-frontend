@@ -10,6 +10,7 @@ export default function VideoLayout({ withquery = false, opened, result }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const [currentVideo, setCurrentVideo] = useState({})
+
   const closeVideoLayoutHandler = () => {
     let p = router.query.p
     dispatch(changeKeyCodeAction(null))
@@ -40,6 +41,7 @@ export default function VideoLayout({ withquery = false, opened, result }) {
     }
     fetchData()
   }, [opened, result, router.locale])
+
   return (
     <div className={s.videoLayout_wrapper}>
       <section className={s.videoLayout}>

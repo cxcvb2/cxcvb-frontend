@@ -49,13 +49,6 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
   const { asPath, basePath } = useRouter()
   const [metacom, setMetacom] = useState(null)
 
-  // const handleOnAccept = () => {
-  //   console.log('accept', acceptURL)
-  //   dispatch(changeAcceptUrlVisibility(false))
-  //   setAcceptURL('')
-  //   router.push(acceptURL)
-  // }
-
   const handleOnClick = async (id) => {
     const url = inputValue ? inputValue : router.asPath
     await metacom.api.shareURL.share({ id, url })
@@ -68,7 +61,6 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
 
   useEffect(() => {
     ;(async () => {
-      console.log('create connection', metacom)
       const { Metacom } = await import('../../lib/metacom')
       const metacom = await Metacom.create('ws://92.63.106.41:8001/api')
       setMetacom(metacom)
@@ -78,7 +70,6 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
       // dispatch(setDevices(devices))
       setDevices(devices)
       metacom.api.shareURL.on('share', ({ url }) => {
-        console.log('share')
         dispatch(changeShareUrlVisibility(false))
         if (isValidHttpUrl(url)) {
           return (location.href = url)
@@ -88,14 +79,11 @@ const ShareUrlModal = memo(function ShareUrlModal({ deviceName }) {
         // setAcceptURL(url)
       })
       metacom.api.shareURL.on('disconnected', ({ id }) => {
-        console.log('dis')
         setDevices((prev) => prev.filter((d) => d.id !== id))
         // dispatch(removeDevices(id))
       })
 
       metacom.api.shareURL.on('connected', ({ id, name }) => {
-        console.log('con', id, name)
-        console.log(devices, [...devices, { id, name }])
         setDevices((prev) => [...prev, { id, name }])
         // dispatch(setDevices([{ id, name }]))
       })

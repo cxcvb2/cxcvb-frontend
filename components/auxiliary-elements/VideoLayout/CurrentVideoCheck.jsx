@@ -7,7 +7,6 @@ export default function CurrentVideoCheck({ currentVideo }) {
   const isSkeleton = iframeIsLoaded
     ? `${s.videoLayout__video_wrapper} ${skl.skeleton}`
     : s.videoLayout__video_wrapper
-
   return (
     <>
       {currentVideo ? (

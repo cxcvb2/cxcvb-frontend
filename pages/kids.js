@@ -47,7 +47,6 @@ export const getServerSideProps = async ({ locale }) => {
     type: 'ForKids',
     locale,
   })
-  console.log({ result })
   return {
     props: {
       video: result || {},
